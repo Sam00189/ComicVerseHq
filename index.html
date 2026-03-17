@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ComicVerse - Your Ultimate Comic Book Store</title>
+    <meta name="description" content="Discover the best comics from Marvel, DC, Manga, and Indie publishers. Shop thousands of comic books at ComicVerse with exclusive deals and new releases daily.">
+    <meta name="keywords" content="comic books, marvel comics, dc comics, manga, indie comics, graphic novels, comic store">
+    <meta name="author" content="ComicVerse">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="ComicVerse - Your Ultimate Comic Book Store">
+    <meta property="og:description" content="Discover the best comics from Marvel, DC, Manga, and Indie publishers. Shop thousands of comic books with exclusive deals.">
+    <meta property="og:image" content="https://comicverse.web.app/assets/images/og-image.jpg">
+    <meta property="og:url" content="https://comicverse.web.app">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="ComicVerse">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ComicVerse - Your Ultimate Comic Book Store">
+    <meta name="twitter:description" content="Discover the best comics from Marvel, DC, Manga, and Indie publishers.">
+    <meta name="twitter:image" content="https://comicverse.web.app/assets/images/twitter-card.jpg">
+    <meta name="twitter:site" content="@comicverse">
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    
+    <!-- Firebase SDK -->
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="/" class="logo">COMICVERSE</a>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="/" class="active">Home</a></li>
+                    <li><a href="/pages/shop.html">Shop</a></li>
+                    <li><a href="/categories/marvel.html">Marvel</a></li>
+                    <li><a href="/categories/dc.html">DC</a></li>
+                    <li><a href="/categories/manga.html">Manga</a></li>
+                    <li><a href="/categories/indie.html">Indie</a></li>
+                    <li><a href="/pages/blog/index.html">Blog</a></li>
+                    <li><a href="/pages/cart.html" class="cart-icon">
+                        Cart <span class="cart-count" id="cartCount">0</span>
+                    </a></li>
+                    <li class="auth-links" id="authLinks">
+                        <a href="/pages/login.html" class="btn-login">Login</a>
+                        <a href="/pages/signup.html" class="btn-signup">Sign Up</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">WELCOME TO THE <span>COMICVERSE</span></h1>
+                <p class="hero-subtitle">Discover thousands of comics from Marvel, DC, Manga & Indie publishers</p>
+                <div class="hero-buttons">
+                    <a href="/pages/shop.html" class="btn btn-primary">Start Shopping</a>
+                    <a href="/categories/marvel.html" class="btn btn-secondary">Browse Categories</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="categories-section">
+            <div class="container">
+                <h2 class="section-title">SHOP BY <span>CATEGORY</span></h2>
+                <div class="categories-grid">
+                    <a href="/categories/marvel.html" class="category-card marvel">
+                        <div class="category-content">
+                            <h3>MARVEL</h3>
+                            <p>Explore Avengers, Spider-Man, X-Men & More</p>
+                            <span class="category-link">Shop Marvel →</span>
+                        </div>
+                    </a>
+                    <a href="/categories/dc.html" class="category-card dc">
+                        <div class="category-content">
+                            <h3>DC</h3>
+                            <p>Discover Batman, Superman, Wonder Woman & More</p>
+                            <span class="category-link">Shop DC →</span>
+                        </div>
+                    </a>
+                    <a href="/categories/manga.html" class="category-card manga">
+                        <div class="category-content">
+                            <h3>MANGA</h3>
+                            <p>Find Naruto, One Piece, Attack on Titan & More</p>
+                            <span class="category-link">Shop Manga →</span>
+                        </div>
+                    </a>
+                    <a href="/categories/indie.html" class="category-card indie">
+                        <div class="category-content">
+                            <h3>INDIE</h3>
+                            <p>Discover Independent Comics & Graphic Novels</p>
+                            <span class="category-link">Shop Indie →</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Comics Section -->
+        <section class="featured-section">
+            <div class="container">
+                <h2 class="section-title">FEATURED <span>COMICS</span></h2>
+                <div class="comics-grid" id="featuredComics">
+                    <!-- Featured comics will be loaded here via JavaScript -->
+                </div>
+                <div class="view-all">
+                    <a href="/pages/shop.html" class="btn btn-outline">View All Comics</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="newsletter-section">
+            <div class="container">
+                <div class="newsletter-content">
+                    <h2>JOIN THE COMICVERSE</h2>
+                    <p>Subscribe for exclusive deals, new releases, and comic news!</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" placeholder="Enter your email" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Preview Section -->
+        <section class="blog-preview-section">
+            <div class="container">
+                <h2 class="section-title">LATEST FROM THE <span>BLOG</span></h2>
+                <div class="blog-grid" id="blogPreview">
+                    <!-- Blog posts will be loaded here -->
+                </div>
+                <div class="view-all">
+                    <a href="/pages/blog/index.html" class="btn btn-outline">Read All Posts</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>About ComicVerse</h3>
+                    <p>Your premier destination for comic books from all publishers. We're passionate about bringing the best comics to fans worldwide.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">📘</a>
+                        <a href="#" aria-label="Twitter">🐦</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                        <a href="#" aria-label="YouTube">▶️</a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/pages/shop.html">Shop All Comics</a></li>
+                        <li><a href="/pages/blog/index.html">Comic Blog</a></li>
+                        <li><a href="/pages/dashboard.html">My Account</a></li>
+                        <li><a href="/pages/cart.html">Shopping Cart</a></li>
+                        <li><a href="/pages/checkout.html">Checkout</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="/categories/marvel.html">Marvel Comics</a></li>
+                        <li><a href="/categories/dc.html">DC Comics</a></li>
+                        <li><a href="/categories/manga.html">Manga</a></li>
+                        <li><a href="/categories/indie.html">Indie Comics</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="/pages/faq.html">FAQ</a></li>
+                        <li><a href="/pages/shipping.html">Shipping Info</a></li>
+                        <li><a href="/pages/returns.html">Returns</a></li>
+                        <li><a href="/pages/contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 ComicVerse. All rights reserved. | <a href="/privacy.html">Privacy Policy</a> | <a href="/terms.html">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+ 
+<!-- Firebase SDKs -->
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+<script src="js/firebase-config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

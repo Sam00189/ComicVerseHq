@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - ComicVerse</title>
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar">
+            <a href="/pages/admin/dashboard.html" class="admin-logo">
+                COMICVERSE
+                <span>Admin Panel</span>
+            </a>
+            
+            <nav class="admin-nav">
+                <a href="/pages/admin/dashboard.html" class="admin-nav-link active">
+                    <i>📊</i>
+                    Dashboard
+                </a>
+                <a href="/pages/admin/manage-comics.html" class="admin-nav-link">
+                    <i>📚</i>
+                    Manage Comics
+                </a>
+                <a href="/pages/admin/manage-orders.html" class="admin-nav-link">
+                    <i>📦</i>
+                    Orders
+                </a>
+                <a href="/pages/admin/manage-users.html" class="admin-nav-link">
+                    <i>👥</i>
+                    Users
+                </a>
+                <a href="/pages/admin/manage-blog.html" class="admin-nav-link">
+                    <i>📝</i>
+                    Blog Posts
+                </a>
+                <a href="/pages/admin/settings.html" class="admin-nav-link">
+                    <i>⚙️</i>
+                    Settings
+                </a>
+                <hr class="nav-divider">
+                <a href="/" class="admin-nav-link">
+                    <i>🏠</i>
+                    View Site
+                </a>
+                <a href="#" onclick="logout()" class="admin-nav-link">
+                    <i>🚪</i>
+                    Logout
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Admin Main Content -->
+        <main class="admin-main">
+            <!-- Admin Header -->
+            <header class="admin-header">
+                <h1>Dashboard</h1>
+                <div class="admin-user">
+                    <span id="adminName">Loading...</span>
+                    <div class="admin-avatar" id="adminAvatar">A</div>
+                </div>
+            </header>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📚</div>
+                    <div class="stat-info">
+                        <h3>Total Comics</h3>
+                        <p id="totalComics">0</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">📦</div>
+                    <div class="stat-info">
+                        <h3>Total Orders</h3>
+                        <p id="totalOrders">0</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-info">
+                        <h3>Total Users</h3>
+                        <p id="totalUsers">0</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-info">
+                        <h3>Revenue</h3>
+                        <p id="totalRevenue">$0</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-info">
+                        <h3>Today's Orders</h3>
+                        <p id="todayOrders">0</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-info">
+                        <h3>Avg. Rating</h3>
+                        <p id="avgRating">4.5</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3>Sales Overview</h3>
+                    <canvas id="salesChart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Popular Categories</h3>
+                    <canvas id="categoriesChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Orders -->
+            <div class="recent-orders">
+                <h3>Recent Orders</h3>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentOrders">
+                        <tr>
+                            <td colspan="6" class="text-center">Loading orders...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h3>Quick Actions</h3>
+                <div class="action-buttons">
+                    <a href="/pages/admin/manage-comics.html?action=add" class="quick-action-card">
+                        <i>➕</i>
+                        <span>Add New Comic</span>
+                    </a>
+                    <a href="/pages/admin/manage-blog.html?action=add" class="quick-action-card">
+                        <i>📝</i>
+                        <span>Write Blog Post</span>
+                    </a>
+                    <a href="/pages/admin/manage-orders.html" class="quick-action-card">
+                        <i>📦</i>
+                        <span>Process Orders</span>
+                    </a>
+                    <a href="/pages/admin/manage-users.html" class="quick-action-card">
+                        <i>👥</i>
+                        <span>Manage Users</span>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/firebase-config.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/admin.js"></script>
+    <script>
+        let salesChart, categoriesChart;
+
+        // Load admin dashboard data
+        async function loadAdminDashboard() {
+            try {
+                // Get current admin user
+                const user = auth.currentUser;
+                if (user) {
+                    const userData = await getUserData(user.uid);
+                    if (userData.success) {
+                        document.getElementById('adminName').textContent = userData.data.displayName || 'Admin';
+                        document.getElementById('adminAvatar').textContent = 
+                            (userData.data.displayName || 'A')[0].toUpperCase();
+                    }
+                }
+
+                // Load stats
+                await loadDashboardStats();
+                
+                // Load recent orders
+                await loadRecentOrders();
+                
+                // Initialize charts
+                initCharts();
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+            }
+        }
+
+        // Load dashboard statistics
+        async function loadDashboardStats() {
+            try {
+                // Total comics
+                const comicsSnapshot = await db.collection('comics').get();
+                document.getElementById('totalComics').textContent = comicsSnapshot.size;
+
+                // Total orders
+                const ordersSnapshot = await db.collection('orders').get();
+                document.getElementById('totalOrders').textContent = ordersSnapshot.size;
+
+                // Total users
+                const usersSnapshot = await db.collection('users').get();
+                document.getElementById('totalUsers').textContent = usersSnapshot.size;
+
+                // Total revenue
+                let revenue = 0;
+                ordersSnapshot.forEach(doc => {
+                    revenue += doc.data().total || 0;
+                });
+                document.getElementById('totalRevenue').textContent = `$${revenue.toFixed(2)}`;
+
+                // Today's orders
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const todaySnapshot = await db.collection('orders')
+                    .where('createdAt', '>=', today)
+                    .get();
+                document.getElementById('todayOrders').textContent = todaySnapshot.size;
+
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        // Load recent orders
+        async function loadRecentOrders() {
+            try {
+                const snapshot = await db.collection('orders')
+                    .orderBy('createdAt', 'desc')
+                    .limit(10)
+                    .get();
+
+                const tbody = document.getElementById('recentOrders');
+                
+                if (snapshot.empty) {
+                    tbody.innerHTML = '<tr><td colspan="6" class="text-center">No orders found</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = '';
+
+                for (const doc of snapshot.docs) {
+                    const order = doc.data();
+                    const date = order.createdAt ? order.createdAt.toDate().toLocaleDateString() : 'N/A';
+                    
+                    // Get customer name
+                    let customerName = 'Unknown';
+                    if (order.userId) {
+                        const userDoc = await db.collection('users').doc(order.userId).get();
+                        if (userDoc.exists) {
+                            customerName = userDoc.data().displayName || userDoc.data().email || 'Unknown';
+                        }
+                    }
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>#${doc.id.slice(0, 8)}</td>
+                        <td>${customerName}</td>
+                        <td>$${order.total?.toFixed(2) || '0.00'}</td>
+                        <td><span class="status-badge status-${order.status || 'pending'}">${order.status || 'pending'}</span></td>
+                        <td>${date}</td>
+                        <td>
+                            <button class="btn-icon" onclick="viewOrder('${doc.id}')" title="View Order">👁️</button>
+                            <button class="btn-icon" onclick="updateOrderStatus('${doc.id}')" title="Update Status">✏️</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                }
+            } catch (error) {
+                console.error('Error loading recent orders:', error);
+                document.getElementById('recentOrders').innerHTML = 
+                    '<tr><td colspan="6" class="text-center text-danger">Error loading orders</td></tr>';
+            }
+        }
+
+        // Initialize charts
+        function initCharts() {
+            // Sales chart
+            const salesCtx = document.getElementById('salesChart').getContext('2d');
+            salesChart = new Chart(salesCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Sales',
+                        data: [65, 59, 80, 81, 56, 55, 40, 45, 70, 85, 90, 100],
+                        borderColor: '#ffd700',
+                        backgroundColor: 'rgba(255, 215, 0, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#fff'
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#fff'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#fff'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Categories chart
+            const categoriesCtx = document.getElementById('categoriesChart').getContext('2d');
+            categoriesChart = new Chart(categoriesCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Marvel', 'DC', 'Manga', 'Indie'],
+                    datasets: [{
+                        data: [300, 250, 200, 150],
+                        backgroundColor: [
+                            '#ed1d24',
+                            '#0476b4',
+                            '#ff6b6b',
+                            '#a8e6cf'
+                        ],
+                        borderColor: '#1a1a1a',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#fff'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // View order details
+        function viewOrder(orderId) {
+            // Implement order view modal
+            alert(`View order: ${orderId}`);
+        }
+
+        // Update order status
+        function updateOrderStatus(orderId) {
+            // Implement status update modal
+            const statuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
+            const newStatus = prompt('Enter new status: ' + statuses.join(', '));
+            if (newStatus && statuses.includes(newStatus)) {
+                // Update status in Firestore
+                db.collection('orders').doc(orderId).update({
+                    status: newStatus,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => {
+                    showNotification('Order status updated', 'success');
+                    loadRecentOrders();
+                }).catch(error => {
+                    showNotification('Error updating order', 'error');
+                });
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', loadAdminDashboard);
+    </script>
+</body>
+</html>

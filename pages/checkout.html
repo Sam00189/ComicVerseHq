@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - ComicVerse</title>
+    <meta name="description" content="Complete your purchase securely.">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="/" class="logo">COMICVERSE</a>
+                
+                <ul class="nav-menu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/pages/shop.html">Shop</a></li>
+                    <li><a href="/pages/cart.html">Cart</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="checkout-page">
+            <div class="container">
+                <h1 class="page-title">CHECKOUT</h1>
+                
+                <div class="checkout-container">
+                    <!-- Checkout Form -->
+                    <div class="checkout-form">
+                        <!-- Shipping Information -->
+                        <div class="checkout-section">
+                            <h2>Shipping Information</h2>
+                            
+                            <form id="shippingForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="firstName">First Name *</label>
+                                        <input type="text" id="firstName" class="form-input" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lastName">Last Name *</label>
+                                        <input type="text" id="lastName" class="form-input" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">Email *</label>
+                                    <input type="email" id="email" class="form-input" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="phone">Phone *</label>
+                                    <input type="tel" id="phone" class="form-input" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="address">Street Address *</label>
+                                    <input type="text" id="address" class="form-input" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="apartment">Apartment, Suite, etc. (optional)</label>
+                                    <input type="text" id="apartment" class="form-input">
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="city">City *</label>
+                                        <input type="text" id="city" class="form-input" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="state">State *</label>
+                                        <select id="state" class="form-input" required>
+                                            <option value="">Select State</option>
+                                            <option value="AL">Alabama</option>
+                                            <option value="AK">Alaska</option>
+                                            <option value="AZ">Arizona</option>
+                                            <option value="AR">Arkansas</option>
+                                            <option value="CA">California</option>
+                                            <option value="CO">Colorado</option>
+                                            <option value="CT">Connecticut</option>
+                                            <option value="DE">Delaware</option>
+                                            <option value="FL">Florida</option>
+                                            <option value="GA">Georgia</option>
+                                            <option value="HI">Hawaii</option>
+                                            <option value="ID">Idaho</option>
+                                            <option value="IL">Illinois</option>
+                                            <option value="IN">Indiana</option>
+                                            <option value="IA">Iowa</option>
+                                            <option value="KS">Kansas</option>
+                                            <option value="KY">Kentucky</option>
+                                            <option value="LA">Louisiana</option>
+                                            <option value="ME">Maine</option>
+                                            <option value="MD">Maryland</option>
+                                            <option value="MA">Massachusetts</option>
+                                            <option value="MI">Michigan</option>
+                                            <option value="MN">Minnesota</option>
+                                            <option value="MS">Mississippi</option>
+                                            <option value="MO">Missouri</option>
+                                            <option value="MT">Montana</option>
+                                            <option value="NE">Nebraska</option>
+                                            <option value="NV">Nevada</option>
+                                            <option value="NH">New Hampshire</option>
+                                            <option value="NJ">New Jersey</option>
+                                            <option value="NM">New Mexico</option>
+                                            <option value="NY">New York</option>
+                                            <option value="NC">North Carolina</option>
+                                            <option value="ND">North Dakota</option>
+                                            <option value="OH">Ohio</option>
+                                            <option value="OK">Oklahoma</option>
+                                            <option value="OR">Oregon</option>
+                                            <option value="PA">Pennsylvania</option>
+                                            <option value="RI">Rhode Island</option>
+                                            <option value="SC">South Carolina</option>
+                                            <option value="SD">South Dakota</option>
+                                            <option value="TN">Tennessee</option>
+                                            <option value="TX">Texas</option>
+                                            <option value="UT">Utah</option>
+                                            <option value="VT">Vermont</option>
+                                            <option value="VA">Virginia</option>
+                                            <option value="WA">Washington</option>
+                                            <option value="WV">West Virginia</option>
+                                            <option value="WI">Wisconsin</option>
+                                            <option value="WY">Wyoming</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="zipCode">ZIP Code *</label>
+                                        <input type="text" id="zipCode" class="form-input" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="country">Country *</label>
+                                    <select id="country" class="form-input" required>
+                                        <option value="US">United States</option>
+                                        <option value="CA">Canada</option>
+                                        <option value="UK">United Kingdom</option>
+                                        <option value="AU">Australia</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="saveAddress">
+                                        Save this address for future orders
+                                    </label>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Payment Method -->
+                        <div class="checkout-section">
+                            <h2>Payment Method</h2>
+                            
+                            <div class="payment-methods">
+                                <label class="payment-method">
+                                    <input type="radio" name="paymentMethod" value="credit" checked>
+                                    <span class="payment-method-content">
+                                        <strong>Credit Card</strong>
+                                        <span>💳 Visa, Mastercard, Amex</span>
+                                    </span>
+                                </label>
+                                
+                                <label class="payment-method">
+                                    <input type="radio" name="paymentMethod" value="paypal">
+                                    <span class="payment-method-content">
+                                        <strong>PayPal</strong>
+                                        <span>💰 Pay with your PayPal account</span>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <!-- Credit Card Form (shown when credit card is selected) -->
+                            <div id="creditCardForm" class="credit-card-form">
+                                <div class="form-group">
+                                    <label for="cardNumber">Card Number</label>
+                                    <input type="text" id="cardNumber" class="form-input" placeholder="1234 5678 9012 3456">
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="expiryDate">Expiry Date</label>
+                                        <input type="text" id="expiryDate" class="form-input" placeholder="MM/YY">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cvv">CVV</label>
+                                        <input type="text" id="cvv" class="form-input" placeholder="123">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="cardName">Name on Card</label>
+                                    <input type="text" id="cardName" class="form-input">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Order Summary (Mobile) -->
+                        <div class="checkout-section mobile-order-summary">
+                            <h2>Order Summary</h2>
+                            <div id="checkoutItems"></div>
+                            <div class="checkout-total">
+                                <span>Total:</span>
+                                <span id="checkoutTotal">$0.00</span>
+                            </div>
+                        </div>
+
+                        <!-- Place Order Button -->
+                        <div class="checkout-actions">
+                            <button class="btn btn-primary btn-large" onclick="placeOrder()" id="placeOrderBtn">
+                                Place Order (Demo)
+                            </button>
+                            <a href="/pages/cart.html" class="btn btn-outline">Return to Cart</a>
+                        </div>
+
+                        <div class="demo-notice">
+                            <p>⚠️ This is a demo checkout. No actual payment will be processed.</p>
+                        </div>
+                    </div>
+
+                    <!-- Order Summary (Desktop) -->
+                    <div class="checkout-summary">
+                        <h2>Order Summary</h2>
+                        <div id="checkoutItemsDesktop" class="checkout-items"></div>
+                        
+                        <div class="summary-divider"></div>
+                        
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="checkoutSubtotal">$0.00</span>
+                        </div>
+                        
+                        <div class="summary-row">
+                            <span>Shipping</span>
+                            <span>Free</span>
+                        </div>
+                        
+                        <div class="summary-row">
+                            <span>Tax</span>
+                            <span id="checkoutTax">$0.00</span>
+                        </div>
+                        
+                        <div class="summary-divider"></div>
+                        
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span id="checkoutTotalDesktop">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 ComicVerse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/firebase-config.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/cart.js"></script>
+    <script>
+        // Check if user is logged in
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = '/pages/login.html';
+            } else {
+                loadCheckoutData(user);
+            }
+        });
+
+        function loadCheckoutData(user) {
+            // Load user data
+            db.collection('users').doc(user.uid).get().then((doc) => {
+                if (doc.exists) {
+                    const userData = doc.data();
+                    
+                    // Pre-fill form with user data
+                    document.getElementById('firstName').value = userData.firstName || '';
+                    document.getElementById('lastName').value = userData.lastName || '';
+                    document.getElementById('email').value = userData.email || '';
+                    document.getElementById('phone').value = userData.phone || '';
+                    document.getElementById('address').value = userData.address || '';
+                    document.getElementById('city').value = userData.city || '';
+                    document.getElementById('state').value = userData.state || '';
+                    document.getElementById('zipCode').value = userData.zipCode || '';
+                }
+            });
+
+            // Display cart items
+            displayCheckoutItems();
+        }
+
+        function displayCheckoutItems() {
+            const items = cart.items;
+            const subtotal = cart.getTotal();
+            const tax = subtotal * 0.08; // 8% tax
+            const total = subtotal + tax;
+
+            // Display in mobile summary
+            const mobileItems = document.getElementById('checkoutItems');
+            if (mobileItems) {
+                mobileItems.innerHTML = items.map(item => `
+                    <div class="checkout-item">
+                        <span>${item.title} x${item.quantity}</span>
+                        <span>$${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                `).join('');
+            }
+
+            // Display in desktop summary
+            const desktopItems = document.getElementById('checkoutItemsDesktop');
+            if (desktopItems) {
+                desktopItems.innerHTML = items.map(item => `
+                    <div class="checkout-item">
+                        <div class="item-info">
+                            <span class="item-title">${item.title}</span>
+                            <span class="item-quantity">Qty: ${item.quantity}</span>
+                        </div>
+                        <span class="item-price">$${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                `).join('');
+            }
+
+            // Update totals
+            const subtotalElements = ['checkoutSubtotal', 'checkoutTotal'];
+            subtotalElements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) element.textContent = `$${subtotal.toFixed(2)}`;
+            });
+
+            document.getElementById('checkoutTax').textContent = `$${tax.toFixed(2)}`;
+            
+            const totalElements = ['checkoutTotal', 'checkoutTotalDesktop'];
+            totalElements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) element.textContent = `$${total.toFixed(2)}`;
+            });
+        }
+
+        function placeOrder() {
+            if (cart.items.length === 0) {
+                showNotification('Your cart is empty', 'error');
+                return;
+            }
+
+            // Validate form (simplified for demo)
+            const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'state', 'zipCode'];
+            for (let field of requiredFields) {
+                if (!document.getElementById(field).value) {
+                    showNotification('Please fill in all required fields', 'error');
+                    return;
+                }
+            }
+
+            // Demo order placement
+            cart.checkout();
+        }
+
+        // Payment method toggle
+        document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const creditCardForm = document.getElementById('creditCardForm');
+                creditCardForm.style.display = e.target.value === 'credit' ? 'block' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>

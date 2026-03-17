@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 10 Marvel Comics of 2024 - ComicVerse Blog</title>
+    <meta name="description" content="Discover the best Marvel comics that have taken the world by storm this year. From Spider-Man to X-Men, here are our top picks.">
+    <meta name="keywords" content="marvel comics, best marvel comics 2024, marvel reviews, comic book recommendations">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Top 10 Marvel Comics of 2024">
+    <meta property="og:description" content="Discover the best Marvel comics that have taken the world by storm this year.">
+    <meta property="og:image" content="/assets/images/blog/top-10-marvel.jpg">
+    <meta property="og:url" content="https://comicverse.web.app/pages/blog/post1.html">
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2024-01-15">
+    <meta property="article:author" content="ComicVerse Staff">
+    <meta property="article:section" content="Marvel">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Top 10 Marvel Comics of 2024">
+    <meta name="twitter:description" content="Discover the best Marvel comics of 2024">
+    <meta name="twitter:image" content="/assets/images/blog/top-10-marvel.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="/" class="logo">COMICVERSE</a>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/pages/shop.html">Shop</a></li>
+                    <li><a href="/categories/marvel.html">Marvel</a></li>
+                    <li><a href="/categories/dc.html">DC</a></li>
+                    <li><a href="/categories/manga.html">Manga</a></li>
+                    <li><a href="/categories/indie.html">Indie</a></li>
+                    <li><a href="/pages/blog/index.html" class="active">Blog</a></li>
+                    <li><a href="/pages/cart.html">Cart</a></li>
+                    <li class="auth-links" id="authLinks"></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Blog Post Header -->
+        <article class="blog-post-full">
+            <div class="blog-post-header">
+                <div class="container">
+                    <div class="post-meta">
+                        <span class="post-category">Marvel</span>
+                        <span class="post-date">January 15, 2024</span>
+                        <span class="post-author">By ComicVerse Staff</span>
+                    </div>
+                    <h1 class="post-title">Top 10 Marvel Comics of 2024</h1>
+                    <div class="post-share">
+                        <span>Share:</span>
+                        <a href="#" onclick="shareOnFacebook()" class="share-btn facebook">📘</a>
+                        <a href="#" onclick="shareOnTwitter()" class="share-btn twitter">🐦</a>
+                        <a href="#" onclick="shareOnPinterest()" class="share-btn pinterest">📌</a>
+                        <a href="#" onclick="shareByEmail()" class="share-btn email">📧</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Image -->
+            <div class="post-featured-image">
+                <img src="/assets/images/blog/top-10-marvel.jpg" alt="Top 10 Marvel Comics of 2024">
+            </div>
+
+            <!-- Post Content -->
+            <div class="post-content container">
+                <p class="post-intro">The Marvel Universe continues to expand and evolve with incredible storytelling, breathtaking artwork, and unforgettable characters. 2024 has been a phenomenal year for Marvel comics, and we've curated a list of the absolute best issues and series you need to read.</p>
+
+                <h2>10. Amazing Spider-Man #42</h2>
+                <img src="/assets/images/blog/spider-man-42.jpg" alt="Amazing Spider-Man #42">
+                <p>The latest arc in Peter Parker's life takes an unexpected turn as a new villain emerges from his past. Zeb Wells and John Romita Jr. deliver another masterpiece that reminds us why Spider-Man remains Marvel's flagship character.</p>
+                <p><strong>Why it made the list:</strong> The character development and emotional depth in this issue set a new standard for superhero comics.</p>
+
+                <h2>9. X-Men: Rise of Krakoa</h2>
+                <img src="/assets/images/blog/xmen-krakoa.jpg" alt="X-Men: Rise of Krakoa">
+                <p>Jonathan Hickman's vision for the X-Men reaches new heights as the mutant nation faces its greatest challenge yet. This issue features the return of a classic villain and sets up the next major crossover event.</p>
+                <p><strong>Why it made the list:</strong> The political intrigue and world-building make this essential reading for any X-Men fan.</p>
+
+                <h2>8. Thor: God of Storms #7</h2>
+                <img src="/assets/images/blog/thor-storm.jpg" alt="Thor: God of Storms">
+                <p>Donny Cates continues his epic run on Thor with a storyline that explores the God of Thunder's connection to the cosmos. The art by Nic Klein is absolutely breathtaking, with double-page spreads that demand to be seen.</p>
+                <p><strong>Why it made the list:</strong> The cosmic scale and mythological elements create an epic feel that only Thor can deliver.</p>
+
+                <h2>7. Doctor Strange: Multiverse of Madness</h2>
+                <img src="/assets/images/blog/doctor-strange.jpg" alt="Doctor Strange">
+                <p>Following the events of the movie, this series delves deeper into the mysteries of the multiverse. Jed MacKay's writing perfectly captures Strange's voice, while the art team creates psychedelic visuals that push the boundaries of comic art.</p>
+                <p><strong>Why it made the list:</strong> The creative use of the comic medium to depict multiversal travel is innovative and exciting.</p>
+
+                <h2>6. Black Panther: Wakanda Forever #3</h2>
+                <img src="/assets/images/blog/black-panther.jpg" alt="Black Panther">
+                <p>John Ridley's take on T'Challa explores the weight of leadership and the legacy of the Black Panther. This issue features a touching tribute to Chadwick Boseman while moving the character forward in meaningful ways.</p>
+                <p><strong>Why it made the list:</strong> The emotional depth and cultural significance make this more than just a superhero comic.</p>
+
+                <h2>5. Fantastic Four: Reborn</h2>
+                <img src="/assets/images/blog/fantastic-four.jpg" alt="Fantastic Four">
+                <p>Marvel's First Family returns to their roots in this spectacular series by Ryan North. The focus on scientific exploration and family dynamics brings back the magic that made the Fantastic Four great.</p>
+                <p><strong>Why it made the list:</strong> It captures the spirit of exploration and wonder that defined the early Fantastic Four comics.</p>
+
+                <h2>4. Daredevil: Devil's Reign</h2>
+                <img src="/assets/images/blog/daredevil.jpg" alt="Daredevil">
+                <p>Chip Zdarsky's run on Daredevil reaches its climax as Wilson Fisk's reign as Mayor comes to a head. Marco Checchetto's art is cinematic and powerful, capturing every moment of Matt Murdock's struggle.</p>
+                <p><strong>Why it made the list:</strong> The courtroom drama mixed with superhero action creates a unique reading experience.</p>
+
+                <h2>3. Moon Knight: Fist of Khonshu</h2>
+                <img src="/assets/images/blog/moon-knight.jpg" alt="Moon Knight">
+                <p>Building on the success of the Disney+ series, this new run explores Marc Spector's multiple personalities in fascinating ways. The art shifts styles to represent different personalities, creating a visually stunning experience.</p>
+                <p><strong>Why it made the list:</strong> The innovative art style and psychological depth make this a must-read.</p>
+
+                <h2>2. Captain America: Sentinel of Liberty</h2>
+                <img src="/assets/images/blog/captain-america.jpg" alt="Captain America">
+                <p>Ta-Nehisi Coates continues his thought-provoking exploration of what it means to be Captain America in modern America. This series tackles relevant social issues while maintaining the heroic spirit of Steve Rogers.</p>
+                <p><strong>Why it made the list:</strong> The intelligent writing and social commentary elevate this beyond typical superhero fare.</p>
+
+                <h2>1. Avengers: Forever Saga</h2>
+                <img src="/assets/images/blog/avengers-forever.jpg" alt="Avengers">
+                <p>Jason Aaron's epic Avengers run concludes with a storyline that brings together heroes from across time and space. The final issue features a battle so massive it literally reshapes the Marvel Universe.</p>
+                <p><strong>Why it made the list:</strong> The scope and ambition of this story make it the definitive Marvel event of 2024.</p>
+
+                <h3>Honorable Mentions</h3>
+                <ul>
+                    <li>She-Hulk: Attorney at Law - Perfect blend of humor and legal drama</li>
+                    <li>Ms. Marvel: New Mutant - Kamala Khan joins the X-Men</li>
+                    <li>Ghost-Spider: Across the Multiverse - Gwen Stacy's continuing adventures</li>
+                    <li>Wolverine: Weapon X-Files - A noir take on everyone's favorite mutant</li>
+                </ul>
+
+                <div class="post-conclusion">
+                    <h3>Final Thoughts</h3>
+                    <p>2024 has proven that Marvel Comics continues to innovate and entertain. Whether you're a longtime fan or new to comics, there's never been a better time to dive into the Marvel Universe. Head over to our <a href="/pages/shop.html">shop</a> to pick up these amazing issues and start your collection today!</p>
+                </div>
+
+                <!-- Author Bio -->
+                <div class="author-bio">
+                    <img src="/assets/images/team/staff-avatar.jpg" alt="ComicVerse Staff">
+                    <div>
+                        <h4>About the Author</h4>
+                        <p>The ComicVerse Staff is a team of passionate comic enthusiasts dedicated to bringing you the best content about the comic world. With decades of combined reading experience, they know their heroes and villains inside and out.</p>
+                    </div>
+                </div>
+
+                <!-- Comments Section -->
+                <div class="comments-section">
+                    <h3>Comments (12)</h3>
+                    
+                    <div class="comment">
+                        <img src="/assets/images/avatars/user1.jpg" alt="User Avatar" class="comment-avatar">
+                        <div class="comment-content">
+                            <div class="comment-header">
+                                <span class="comment-author">SpiderFan2024</span>
+                                <span class="comment-date">2 days ago</span>
+                            </div>
+                            <p>Great list! I'd also add the new Miles Morales series to the honorable mentions. It's been fantastic!</p>
+                            <button class="comment-reply">Reply</button>
+                        </div>
+                    </div>
+
+                    <div class="comment">
+                        <img src="/assets/images/avatars/user2.jpg" alt="User Avatar" class="comment-avatar">
+                        <div class="comment-content">
+                            <div class="comment-header">
+                                <span class="comment-author">XMenForever</span>
+                                <span class="comment-date">3 days ago</span>
+                            </div>
+                            <p>The X-Men: Rise of Krakoa deserves to be higher on the list! It's been the best X-Men run in years.</p>
+                            <button class="comment-reply">Reply</button>
+                        </div>
+                    </div>
+
+                    <!-- Comment Form -->
+                    <div class="comment-form">
+                        <h4>Leave a Comment</h4>
+                        <form id="commentForm">
+                            <div class="form-group">
+                                <label for="commentName">Name</label>
+                                <input type="text" id="commentName" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="commentEmail">Email</label>
+                                <input type="email" id="commentEmail" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="commentContent">Comment</label>
+                                <textarea id="commentContent" class="form-textarea" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Post Comment</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Posts -->
+            <div class="related-posts">
+                <div class="container">
+                    <h3>Related Posts</h3>
+                    <div class="blog-grid">
+                        <article class="blog-card">
+                            <img src="/assets/images/blog/dc-top10.jpg" alt="Top 10 DC Comics">
+                            <div class="blog-content">
+                                <h4>Top 10 DC Comics of 2024</h4>
+                                <p>Check out the best that DC has to offer this year...</p>
+                                <a href="/pages/blog/post2.html" class="btn btn-outline">Read More</a>
+                            </div>
+                        </article>
+                        
+                        <article class="blog-card">
+                            <img src="/assets/images/blog/manga-trends.jpg" alt="Manga Trends">
+                            <div class="blog-content">
+                                <h4>Manga Trends: What's Hot in Japan</h4>
+                                <p>Explore the latest manga trends...</p>
+                                <a href="/pages/blog/post2.html" class="btn btn-outline">Read More</a>
+                            </div>
+                        </article>
+                        
+                        <article class="blog-card">
+                            <img src="/assets/images/blog/indie-comics.jpg" alt="Indie Comics">
+                            <div class="blog-content">
+                                <h4>Indie Comics You Need to Read</h4>
+                                <p>Discover hidden gems from independent publishers...</p>
+                                <a href="/pages/blog/post2.html" class="btn btn-outline">Read More</a>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>About ComicVerse</h3>
+                    <p>Your premier destination for comic books and news from all publishers.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/pages/shop.html">Shop</a></li>
+                        <li><a href="/pages/blog/index.html">Blog</a></li>
+                        <li><a href="/pages/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="/categories/marvel.html">Marvel</a></li>
+                        <li><a href="/categories/dc.html">DC</a></li>
+                        <li><a href="/categories/manga.html">Manga</a></li>
+                        <li><a href="/categories/indie.html">Indie</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 ComicVerse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .blog-post-full {
+            background-color: var(--dark-bg);
+        }
+
+        .blog-post-header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            padding: 3rem 0;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .post-category {
+            background-color: var(--primary-color);
+            color: var(--darker-bg);
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .post-title {
+            font-family: 'Bangers', cursive;
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin: 1rem 0 2rem;
+            text-shadow: 3px 3px 0 var(--secondary-color);
+        }
+
+        .post-share {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .share-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .share-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .facebook { background-color: #3b5998; color: white; }
+        .twitter { background-color: #1da1f2; color: white; }
+        .pinterest { background-color: #bd081c; color: white; }
+        .email { background-color: #ea4335; color: white; }
+
+        .post-featured-image {
+            width: 100%;
+            max-height: 500px;
+            overflow: hidden;
+        }
+
+        .post-featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .post-content {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 0 20px;
+        }
+
+        .post-intro {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 1.5rem;
+        }
+
+        .post-content h2 {
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin: 3rem 0 1rem;
+        }
+
+        .post-content h3 {
+            font-family: 'Bangers', cursive;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin: 2rem 0 1rem;
+        }
+
+        .post-content img {
+            width: 100%;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            border: 3px solid var(--primary-color);
+        }
+
+        .post-content p {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .post-content ul {
+            margin: 1rem 0 2rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .post-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .post-conclusion {
+            background-color: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+
+        .author-bio {
+            display: flex;
+            gap: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+
+        .author-bio img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            margin: 0;
+        }
+
+        .author-bio h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .author-bio p {
+            margin: 0;
+            color: var(--text-secondary);
+        }
+
+        .comments-section {
+            margin-top: 4rem;
+        }
+
+        .comments-section h3 {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .comment {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .comment-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-color);
+        }
+
+        .comment-content {
+            flex: 1;
+            background-color: var(--card-bg);
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-author {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .comment-date {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .comment-reply {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .comment-reply:hover {
+            text-decoration: underline;
+        }
+
+        .comment-form {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 3rem;
+        }
+
+        .comment-form h4 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .related-posts {
+            background-color: var(--darker-bg);
+            padding: 4rem 0;
+            margin-top: 4rem;
+        }
+
+        .related-posts h3 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-family: 'Bangers', cursive;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .post-title {
+                font-size: 2rem;
+            }
+            
+            .post-meta {
+                flex-wrap: wrap;
+            }
+            
+            .author-bio {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .author-bio img {
+                margin: 0 auto;
+            }
+        }
+    </style>
+
+    <script src="/js/firebase-config.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/cart.js"></script>
+    <script>
+        // Share functions
+        function shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(document.title);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+
+        function shareOnTwitter() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent('Check out this article: ');
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+        }
+
+        function shareOnPinterest() {
+            const url = encodeURIComponent(window.location.href);
+            const media = encodeURIComponent('/assets/images/blog/top-10-marvel.jpg');
+            const description = encodeURIComponent('Top 10 Marvel Comics of 2024');
+            window.open(`https://pinterest.com/pin/create/button/?url=${url}&media=${media}&description=${description}`, '_blank');
+        }
+
+        function shareByEmail() {
+            const subject = encodeURIComponent('Check out this article from ComicVerse');
+            const body = encodeURIComponent(`I thought you might like this article: ${window.location.href}`);
+            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+        }
+
+        // Comment form
+        document.getElementById('commentForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            showNotification('Comment posted! (Demo)', 'success');
+            e.target.reset();
+        });
+
+        // Make share functions global
+        window.shareOnFacebook = shareOnFacebook;
+        window.shareOnTwitter = shareOnTwitter;
+        window.shareOnPinterest = shareOnPinterest;
+        window.shareByEmail = shareByEmail;
+    </script>
+</body>
+</html>

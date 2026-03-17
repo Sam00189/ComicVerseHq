@@ -1,0 +1,311 @@
+/* ComicVerse Responsive Styles */
+
+/* Large Devices (Desktops, 1200px and up) */
+@media (max-width: 1200px) {
+    .container {
+        max-width: 960px;
+    }
+    
+    h1 { font-size: 3rem; }
+    h2 { font-size: 2.2rem; }
+    
+    .hero-title {
+        font-size: 3.5rem;
+    }
+}
+
+/* Medium Devices (Tablets, 992px and down) */
+@media (max-width: 992px) {
+    .container {
+        max-width: 720px;
+    }
+    
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+    
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .hero::before,
+    .hero::after {
+        font-size: 3rem;
+    }
+    
+    .blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Small Devices (Landscape Phones, 768px and down) */
+@media (max-width: 768px) {
+    .container {
+        max-width: 540px;
+    }
+    
+    /* Mobile Navigation */
+    .mobile-menu-btn {
+        display: flex;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background-color: var(--darker-bg);
+        width: 100%;
+        padding: 2rem;
+        transition: var(--transition);
+        border-bottom: 3px solid var(--primary-color);
+        box-shadow: var(--shadow);
+    }
+    
+    .nav-menu.active {
+        left: 0;
+    }
+    
+    .nav-menu li {
+        margin: 1rem 0;
+    }
+    
+    /* Hero Section */
+    .hero {
+        min-height: 500px;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .hero::before,
+    .hero::after {
+        font-size: 2rem;
+    }
+    
+    /* Categories */
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .category-card {
+        height: 250px;
+    }
+    
+    /* Comics Grid */
+    .comics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .comic-card img {
+        height: 200px;
+    }
+    
+    /* Newsletter */
+    .newsletter-form {
+        flex-direction: column;
+    }
+    
+    .newsletter-form input,
+    .newsletter-form button {
+        width: 100%;
+    }
+    
+    /* Blog */
+    .blog-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Footer */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    /* Product Page */
+    .product-container {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Cart Page */
+    .cart-container {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Dashboard */
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Forms */
+    .form-container {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    
+    /* Error Page */
+    .error-code {
+        font-size: 6rem;
+    }
+    
+    .error-title {
+        font-size: 2rem;
+    }
+    
+    .error-actions {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+/* Extra Small Devices (Phones, 576px and down) */
+@media (max-width: 576px) {
+    .comics-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .comic-actions {
+        flex-direction: column;
+    }
+    
+    .cart-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .cart-item img {
+        margin: 0 auto;
+    }
+    
+    .cart-item-details {
+        text-align: center;
+    }
+    
+    .quantity-controls {
+        justify-content: center;
+    }
+}
+
+/* Tablet Specific Adjustments */
+@media (min-width: 769px) and (max-width: 992px) {
+    .comic-card img {
+        height: 250px;
+    }
+    
+    .comic-info {
+        padding: 1rem;
+    }
+    
+    .comic-title {
+        font-size: 1.1rem;
+    }
+    
+    .comic-price {
+        font-size: 1.2rem;
+    }
+}
+
+/* Landscape Mode */
+@media (max-height: 600px) and (orientation: landscape) {
+    .hero {
+        min-height: 400px;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+}
+
+/* High Resolution Screens */
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1320px;
+    }
+    
+    .hero-title {
+        font-size: 5rem;
+    }
+    
+    .categories-grid {
+        gap: 3rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    header,
+    footer,
+    .hero-buttons,
+    .newsletter-section,
+    .comic-actions,
+    .cart-actions {
+        display: none;
+    }
+    
+    body {
+        background-color: white;
+        color: black;
+    }
+    
+    .comic-card {
+        break-inside: avoid;
+        border: 1px solid #ccc;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Dark Mode Support (already dark, but adjusting for system preference) */
+@media (prefers-color-scheme: light) {
+    :root {
+        --dark-bg: #f5f5f5;
+        --darker-bg: #ffffff;
+        --card-bg: #eeeeee;
+        --text-primary: #333333;
+        --text-secondary: #666666;
+        --text-muted: #999999;
+        --border-color: #dddddd;
+    }
+}

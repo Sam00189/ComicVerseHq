@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manga Trends: What's Hot in Japan - ComicVerse Blog</title>
+    <meta name="description" content="Explore the latest manga trends and what's making waves in the Japanese comic scene. From new series to classic revivals.">
+    <meta name="keywords" content="manga trends, japanese comics, manga 2024, best manga, anime news">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Manga Trends: What's Hot in Japan">
+    <meta property="og:description" content="Explore the latest manga trends and what's making waves in Japan.">
+    <meta property="og:image" content="/assets/images/blog/manga-trends.jpg">
+    <meta property="og:url" content="https://comicverse.web.app/pages/blog/post2.html">
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2024-01-12">
+    <meta property="article:author" content="Anime Expert">
+    <meta property="article:section" content="Manga">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Manga Trends: What's Hot in Japan">
+    <meta name="twitter:description" content="Explore the latest manga trends in Japan">
+    <meta name="twitter:image" content="/assets/images/blog/manga-trends.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="/" class="logo">COMICVERSE</a>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/pages/shop.html">Shop</a></li>
+                    <li><a href="/categories/marvel.html">Marvel</a></li>
+                    <li><a href="/categories/dc.html">DC</a></li>
+                    <li><a href="/categories/manga.html">Manga</a></li>
+                    <li><a href="/categories/indie.html">Indie</a></li>
+                    <li><a href="/pages/blog/index.html" class="active">Blog</a></li>
+                    <li><a href="/pages/cart.html">Cart</a></li>
+                    <li class="auth-links" id="authLinks"></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <article class="blog-post-full">
+            <div class="blog-post-header">
+                <div class="container">
+                    <div class="post-meta">
+                        <span class="post-category">Manga</span>
+                        <span class="post-date">January 12, 2024</span>
+                        <span class="post-author">By Anime Expert</span>
+                    </div>
+                    <h1 class="post-title">Manga Trends: What's Hot in Japan</h1>
+                    <div class="post-share">
+                        <span>Share:</span>
+                        <a href="#" onclick="shareOnFacebook()" class="share-btn facebook">📘</a>
+                        <a href="#" onclick="shareOnTwitter()" class="share-btn twitter">🐦</a>
+                        <a href="#" onclick="shareOnPinterest()" class="share-btn pinterest">📌</a>
+                        <a href="#" onclick="shareByEmail()" class="share-btn email">📧</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-featured-image">
+                <img src="/assets/images/blog/manga-trends.jpg" alt="Manga Trends in Japan">
+            </div>
+
+            <div class="post-content container">
+                <p class="post-intro">The world of manga is constantly evolving, with new trends emerging from Japan's vibrant publishing scene. From genre-bending series to digital innovations, here's what's capturing readers' attention in 2024.</p>
+
+                <h2>1. The Rise of Digital-First Manga</h2>
+                <img src="/assets/images/blog/digital-manga.jpg" alt="Digital Manga">
+                <p>Japan is seeing a massive shift toward digital-first publications. Apps like Manga UP! and Jump+ are producing hit series that never see print until they've proven their popularity. This has democratized the industry, allowing new creators to find audiences without traditional barriers.</p>
+                <p><strong>Key series to watch:</strong> "Kaiju No. 8" continues its dominance, while new hits like "Monochrome Days" are breaking records.</p>
+
+                <h2>2. Retro Revival</h2>
+                <img src="/assets/images/blog/retro-manga.jpg" alt="Retro Manga Revival">
+                <p>There's a growing nostalgia movement in manga, with classic series getting new life through sequel series, spin-offs, and beautifully remastered editions. "Urusei Yatsura" and "Ranma 1/2" have seen renewed interest through new anime adaptations, driving readers to the original manga.</p>
+                <p><strong>What's trending:</strong> Collectors are seeking vintage volumes, and publishers are responding with premium reprints.</p>
+
+                <h2>3. Genre Hybridization</h2>
+                <img src="/assets/images/blog/manga-genres.jpg" alt="Manga Genres">
+                <p>The boundaries between genres are blurring. Romance meets science fiction in hit series like "A Galaxy Next Door," while horror comedy is having a moment with "Dark Gathering." This experimentation is attracting diverse readership and keeping the medium fresh.</p>
+                <p><strong>Must-read hybrids:</strong> "Dandadan" (sci-fi × romance × comedy × horror) and "Undead Unluck" (superhero × time loop × comedy).</p>
+
+                <h2>4. Webtoon Influence</h2>
+                <img src="/assets/images/blog/webtoon-influence.jpg" alt="Webtoon Style Manga">
+                <p>Korean webtoons are increasingly influencing Japanese manga, with vertical scrolling formats and full-color releases gaining popularity. Major publishers are launching webtoon divisions and adapting popular Korean webtoons for the Japanese market.</p>
+                <p><strong>Examples:</strong> "Solo Leveling" has become a phenomenon, inspiring similar series in Japan.</p>
+
+                <h2>5. Socially Conscious Storytelling</h2>
+                <img src="/assets/images/blog/social-manga.jpg" alt="Social Issues in Manga">
+                <p>Manga creators are tackling important social issues with unprecedented depth. Mental health, LGBTQ+ themes, and environmental concerns are being explored in mainstream series, resonating with younger readers who want meaningful content.</p>
+                <p><strong>Notable series:</strong> "My Broken Mariko" (grief and trauma), "Our Dreams at Dusk" (LGBTQ+ themes), and "Heaven's Design Team" (environmental themes).</p>
+
+                <h2>6. Short-Form Content</h2>
+                <img src="/assets/images/blog/short-manga.jpg" alt="Short Form Manga">
+                <p>With attention spans shrinking, there's a boom in short-form manga. Twitter (X) manga, 4-panel comics, and series designed for quick reads are gaining traction. This format allows creators to build audiences rapidly and experiment with ideas.</p>
+                <p><strong>Popular examples:</strong> "The Girl Who Can't Get a Girlfriend" started as a Twitter manga before getting a print release.</p>
+
+                <h2>7. International Crossover</h2>
+                <img src="/assets/images/blog/international-manga.jpg" alt="International Manga">
+                <p>Japanese publishers are actively seeking international talent and creating content specifically for global audiences. Manga-inspired comics from other countries are also finding their way into Japanese bookstores, creating a two-way cultural exchange.</p>
+                <p><strong>Trending:</strong> French-Japanese collaborations and Korean artists working on Japanese series are becoming common.</p>
+
+                <h2>8. Subscription Services</h2>
+                <img src="/assets/images/blog/manga-subscription.jpg" alt="Manga Subscription Services">
+                <p>Subscription-based reading services are transforming how Japanese readers consume manga. Services like Manga Library Z and BookLive! Unlimited offer all-you-can-read models that encourage readers to discover new series.</p>
+                <p><strong>Impact:</strong> Readers are more willing to try unfamiliar genres and creators, diversifying the market.</p>
+
+                <h2>9. Merchandise Integration</h2>
+                <img src="/assets/images/blog/manga-merch.jpg" alt="Manga Merchandise">
+                <p>Successful manga series are now designed with merchandise in mind from the start. Character designs that work as plushies, fashion collaborations, and experiential events are planned alongside the manga's release, creating immersive brand experiences.</p>
+                <p><strong>Examples:</strong> "Chainsaw Man" and "Spy x Family" have extensive merchandise lines that enhance the reading experience.</p>
+
+                <h2>10. AI and Technology</h2>
+                <img src="/assets/images/blog/ai-manga.jpg" alt="AI and Manga">
+                <p>The manga industry is cautiously exploring AI technology for translation, lettering, and even assisting with backgrounds. While controversial, these tools are making it easier for series to be localized quickly and for creators to manage demanding schedules.</p>
+                <p><strong>Future trend:</strong> Expect faster international releases and more experimental art styles as technology evolves.</p>
+
+                <h3>Regional Trends</h3>
+                <p>Different regions of Japan have developed unique manga preferences:</p>
+                <ul>
+                    <li><strong>Tokyo:</strong> Trendy, avant-garde series and digital-first content</li>
+                    <li><strong>Osaka:</strong> Comedy-focused and yonkoma (4-panel) manga</li>
+                    <li><strong>Nagoya:</strong> Traditional shonen and sports manga remain popular</li>
+                    <li><strong>Fukuoka:</strong> Strong interest in seinen and mature-themed series</li>
+                </ul>
+
+                <div class="post-conclusion">
+                    <h3>The Future of Manga</h3>
+                    <p>The manga industry is healthier than ever, with 2024 shaping up to be another record-breaking year. The combination of digital innovation, genre experimentation, and global reach ensures that manga will continue to evolve while maintaining what makes it special. Whether you're a longtime fan or new to the medium, there's never been a more exciting time to explore what Japanese comics have to offer.</p>
+                    <p>Ready to dive in? Browse our <a href="/categories/manga.html">manga collection</a> and discover your next favorite series!</p>
+                </div>
+
+                <!-- Author Bio -->
+                <div class="author-bio">
+                    <img src="/assets/images/team/anime-expert.jpg" alt="Anime Expert">
+                    <div>
+                        <h4>About the Author</h4>
+                        <p>Our Anime Expert has been following the manga industry for over 15 years, with regular visits to Japan to track emerging trends and interview creators. They've contributed to multiple publications and have a collection of over 3,000 manga volumes.</p>
+                    </div>
+                </div>
+
+                <!-- Comments Section -->
+                <div class="comments-section">
+                    <h3>Comments (8)</h3>
+                    
+                    <div class="comment">
+                        <img src="/assets/images/avatars/user3.jpg" alt="User Avatar" class="comment-avatar">
+                        <div class="comment-content">
+                            <div class="comment-header">
+                                <span class="comment-author">MangaReader123</span>
+                                <span class="comment-date">1 day ago</span>
+                            </div>
+                            <p>Great article! I've noticed the webtoon influence too. Some Japanese series are really adapting well to the format.</p>
+                            <button class="comment-reply">Reply</button>
+                        </div>
+                    </div>
+
+                    <div class="comment">
+                        <img src="/assets/images/avatars/user4.jpg" alt="User Avatar" class="comment-avatar">
+                        <div class="comment-content">
+                            <div class="comment-header">
+                                <span class="comment-author">TokyoLiving</span>
+                                <span class="comment-date">2 days ago</span>
+                            </div>
+                            <p>Living in Tokyo, I can confirm the digital trend is huge. You see people reading on phones everywhere on the train.</p>
+                            <button class="comment-reply">Reply</button>
+                        </div>
+                    </div>
+
+                    <!-- Comment Form -->
+                    <div class="comment-form">
+                        <h4>Leave a Comment</h4>
+                        <form id="commentForm">
+                            <div class="form-group">
+                                <label for="commentName">Name</label>
+                                <input type="text" id="commentName" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="commentEmail">Email</label>
+                                <input type="email" id="commentEmail" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="commentContent">Comment</label>
+                                <textarea id="commentContent" class="form-textarea" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Post Comment</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Posts -->
+            <div class="related-posts">
+                <div class="container">
+                    <h3>Related Posts</h3>
+                    <div class="blog-grid">
+                        <article class="blog-card">
+                            <img src="/assets/images/blog/top-10-marvel.jpg" alt="Top 10 Marvel">
+                            <div class="blog-content">
+                                <h4>Top 10 Marvel Comics of 2024</h4>
+                                <p>The best Marvel has to offer this year...</p>
+                                <a href="/pages/blog/post1.html" class="btn btn-outline">Read More</a>
+                            </div>
+                        </article>
+                        
+                        <article class="blog-card">
+                            <img src="/assets/images/blog/indie-comics.jpg" alt="Indie Comics">
+                            <div class="blog-content">
+                                <h4>Indie Comics You Need to Read</h4>
+                                <p>Discover hidden gems from independent publishers...</p>
+                                <a href="/pages/blog/post2.html" class="btn btn-outline">Read More</a>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>About ComicVerse</h3>
+                    <p>Your premier destination for comic books and news from all publishers.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/pages/shop.html">Shop</a></li>
+                        <li><a href="/pages/blog/index.html">Blog</a></li>
+                        <li><a href="/pages/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="/categories/marvel.html">Marvel</a></li>
+                        <li><a href="/categories/dc.html">DC</a></li>
+                        <li><a href="/categories/manga.html">Manga</a></li>
+                        <li><a href="/categories/indie.html">Indie</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 ComicVerse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/firebase-config.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/cart.js"></script>
+    <script>
+        // Share functions
+        function shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+
+        function shareOnTwitter() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent('Check out these manga trends: ');
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+        }
+
+        function shareOnPinterest() {
+            const url = encodeURIComponent(window.location.href);
+            const media = encodeURIComponent('/assets/images/blog/manga-trends.jpg');
+            const description = encodeURIComponent('Manga Trends: What\'s Hot in Japan');
+            window.open(`https://pinterest.com/pin/create/button/?url=${url}&media=${media}&description=${description}`, '_blank');
+        }
+
+        function shareByEmail() {
+            const subject = encodeURIComponent('Check out this article from ComicVerse');
+            const body = encodeURIComponent(`I thought you might like this article about manga trends: ${window.location.href}`);
+            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+        }
+
+        // Comment form
+        document.getElementById('commentForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            showNotification('Comment posted! (Demo)', 'success');
+            e.target.reset();
+        });
+
+        window.shareOnFacebook = shareOnFacebook;
+        window.shareOnTwitter = shareOnTwitter;
+        window.shareOnPinterest = shareOnPinterest;
+        window.shareByEmail = shareByEmail;
+    </script>
+</body>
+</html>

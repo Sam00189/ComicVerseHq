@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - ComicVerse</title>
+    <meta name="description" content="The page you're looking for doesn't exist. Return to ComicVerse and continue your comic adventure.">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="/" class="logo">COMICVERSE</a>
+                <ul class="nav-menu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/pages/shop.html">Shop</a></li>
+                    <li><a href="/pages/blog/index.html">Blog</a></li>
+                    <li><a href="/pages/cart.html">Cart</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="error-page">
+            <div class="error-content">
+                <h1 class="error-code">404</h1>
+                <h2 class="error-title">ISSUE NOT FOUND</h2>
+                <p class="error-message">Looks like this page got lost in the multiverse!</p>
+                <p class="error-description">The page you're looking for doesn't exist or has been moved to another dimension.</p>
+                <div class="error-actions">
+                    <a href="/" class="btn btn-primary">Return to Homepage</a>
+                    <a href="/pages/shop.html" class="btn btn-secondary">Browse Comics</a>
+                </div>
+                <div class="error-comic">
+                    <img src="/assets/images/404-comic.png" alt="Comic character saying: This page doesn't exist!">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 ComicVerse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+<script src="js/firebase-config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

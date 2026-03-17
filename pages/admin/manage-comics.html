@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Comics - ComicVerse Admin</title>
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar">
+            <a href="/pages/admin/dashboard.html" class="admin-logo">
+                COMICVERSE
+                <span>Admin Panel</span>
+            </a>
+            
+            <nav class="admin-nav">
+                <a href="/pages/admin/dashboard.html" class="admin-nav-link">
+                    <i>📊</i>
+                    Dashboard
+                </a>
+                <a href="/pages/admin/manage-comics.html" class="admin-nav-link active">
+                    <i>📚</i>
+                    Manage Comics
+                </a>
+                <a href="/pages/admin/manage-orders.html" class="admin-nav-link">
+                    <i>📦</i>
+                    Orders
+                </a>
+                <a href="/pages/admin/manage-users.html" class="admin-nav-link">
+                    <i>👥</i>
+                    Users
+                </a>
+                <a href="/pages/admin/manage-blog.html" class="admin-nav-link">
+                    <i>📝</i>
+                    Blog Posts
+                </a>
+                <a href="/pages/admin/settings.html" class="admin-nav-link">
+                    <i>⚙️</i>
+                    Settings
+                </a>
+                <hr class="nav-divider">
+                <a href="/" class="admin-nav-link">
+                    <i>🏠</i>
+                    View Site
+                </a>
+                <a href="#" onclick="logout()" class="admin-nav-link">
+                    <i>🚪</i>
+                    Logout
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Admin Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <h1>Manage Comics</h1>
+                <button class="btn btn-primary" onclick="openAddComicModal()">
+                    <i>➕</i> Add New Comic
+                </button>
+            </header>
+
+            <!-- Search and Filter -->
+            <div class="admin-search">
+                <input type="text" id="searchComics" class="admin-search-input" 
+                       placeholder="Search comics by title or author...">
+                <select id="categoryFilter" class="admin-search-input" style="width: 200px;">
+                    <option value="all">All Categories</option>
+                    <option value="Marvel">Marvel</option>
+                    <option value="DC">DC</option>
+                    <option value="Manga">Manga</option>
+                    <option value="Indie">Indie</option>
+                </select>
+                <button class="btn btn-secondary" onclick="filterComics()">Filter</button>
+            </div>
+
+            <!-- Comics Table -->
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Price</th>
+                        <th>Category</th>
+                        <th>Stock</th>
+                        <th>Featured</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="comicsTableBody">
+                    <tr>
+                        <td colspan="9" class="text-center">Loading comics...</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination"></div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Comic Modal -->
+    <div id="comicModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Comic</h2>
+                <button class="modal-close" onclick="closeModal('comicModal')">&times;</button>
+            </div>
+            
+            <form id="comicForm" class="admin-form">
+                <input type="hidden" id="comicId">
+                
+                <div class="admin-form-group">
+                    <label class="admin-form-label">Title *</label>
+                    <input type="text" id="title" class="admin-form-input" required>
+                </div>
+
+                <div class="admin-form-group">
+                    <label class="admin-form-label">Author *</label>
+                    <input type="text" id="author" class="admin-form-input" required>
+                </div>
+
+                <div class="admin-form-group">
+                    <label class="admin-form-label">Price *</label>
+                    <input type="number" id="price" class="admin-form-input" step="0.01" min="0" required>
+                </div>
+
+                <div class="admin-form-group">
+                    <label class="admin-form-label">Category *</label>
+                    <select id="category" class="admin-form-select" required>
+                        <option value="">Select Category</option>
+                        <option value="Marvel">Marvel</option>
+                        <option value="DC">DC</option>
+                        <option value="Manga">Manga</option>
+                        <option value="Indie">Indie</option>
+                    </select>
+                </div>
+
+                <div class="admin-form-group">
+                    <label class="admin-form-label">Description</label>
+                    <textarea id="description" class="admin-form-textarea" rows="5"></textarea>
+                </div>
+
+                <div class="admin-form-group">
+                    <label class="admin-form-label">Image URL</label>
+                    <input type="url" id="imageUrl" class="admin-form-input" 
+                           placeholder="https://example.com/image.jpg">
+                    <div class="image-upload" onclick="document.getElementById('imageFile').click()">
+                        <i>📁</i>
+                        <p>Click to upload image or enter URL above</p>
+                        <input type="file" id="imageFile" accept="image/*" style="display: none;" 
+                               onchange="uploadImage(this)">
+                    </div>
+                    <div id="imagePreview" class="image-preview"></div>
+                </div>
+
+                <div class="form-row">
+                    <div class="admin-form-group" style="flex: 1;">
+                        <label class="admin-form-label">Stock Quantity</label>
+                        <input type="number" id="stock" class="admin-form-input" value="0" min="0">
+                    </div>
+
+                    <div class="admin-form-group" style="flex: 1;">
+                        <label class="admin-form-label">Publisher</label>
+                        <input type="text" id="publisher" class="admin-form-input">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="admin-form-group" style="flex: 1;">
+                        <label class="admin-form-label">Publication Date</label>
+                        <input type="date" id="publicationDate" class="admin-form-input">
+                    </div>
+
+                    <div class="admin-form-group" style="flex: 1;">
+                        <label class="admin-form-label">Pages</label>
+                        <input type="number" id="pages" class="admin-form-input" min="0">
+                    </div>
+                </div>
+
+                <div class="admin-form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="featured">
+                        <span>Feature this comic on homepage</span>
+                    </label>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Comic</button>
+                    <button type="button" class="btn btn-outline" onclick="closeModal('comicModal')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h2>Confirm Delete</h2>
+                <button class="modal-close" onclick="closeModal('deleteModal')">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <p>Are you sure you want to delete this comic? This action cannot be undone.</p>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-danger" onclick="confirmDelete()">Delete</button>
+                <button class="btn btn-outline" onclick="closeModal('deleteModal')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/firebase-config.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/admin.js"></script>
+    <script>
+        let currentPage = 1;
+        let itemsPerPage = 10;
+        let comicsData = [];
+        let comicToDelete = null;
+
+        // Load comics on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadComics();
+        });
+
+        // Load comics from Firestore
+        async function loadComics() {
+            try {
+                const snapshot = await db.collection('comics')
+                    .orderBy('createdAt', 'desc')
+                    .get();
+
+                comicsData = [];
+                snapshot.forEach(doc => {
+                    comicsData.push({ id: doc.id, ...doc.data() });
+                });
+
+                displayComics();
+            } catch (error) {
+                console.error('Error loading comics:', error);
+                showNotification('Error loading comics', 'error');
+            }
+        }
+
+        // Display comics in table
+        function displayComics() {
+            const tbody = document.getElementById('comicsTableBody');
+            const searchTerm = document.getElementById('searchComics').value.toLowerCase();
+            const categoryFilter = document.getElementById('categoryFilter').value;
+
+            // Filter comics
+            let filteredComics = comicsData.filter(comic => {
+                const matchesSearch = comic.title.toLowerCase().includes(searchTerm) ||
+                                    comic.author.toLowerCase().includes(searchTerm);
+                const matchesCategory = categoryFilter === 'all' || comic.category === categoryFilter;
+                return matchesSearch && matchesCategory;
+            });
+
+            // Pagination
+            const start = (currentPage - 1) * itemsPerPage;
+            const paginatedComics = filteredComics.slice(start, start + itemsPerPage);
+
+            // Display
+            if (paginatedComics.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" class="text-center">No comics found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = '';
+            paginatedComics.forEach(comic => {
+                const date = comic.createdAt ? comic.createdAt.toDate().toLocaleDateString() : 'N/A';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <img src="${comic.imageUrl || '/assets/images/placeholder.jpg'}" 
+                             alt="${comic.title}" 
+                             style="width: 50px; height: 70px; object-fit: cover; border-radius: 5px;">
+                    </td>
+                    <td>${comic.title}</td>
+                    <td>${comic.author || 'Unknown'}</td>
+                    <td>$${comic.price?.toFixed(2) || '0.00'}</td>
+                    <td><span class="category-badge">${comic.category || 'Uncategorized'}</span></td>
+                    <td>
+                        <span class="stock-badge ${(comic.stock || 0) > 0 ? 'in-stock' : 'out-of-stock'}">
+                            ${comic.stock || 0}
+                        </span>
+                    </td>
+                    <td>${comic.featured ? '✅' : '❌'}</td>
+                    <td>${date}</td>
+                    <td>
+                        <button class="btn-icon btn-edit" onclick="editComic('${comic.id}')" title="Edit">
+                            ✏️
+                        </button>
+                        <button class="btn-icon btn-delete" onclick="deleteComic('${comic.id}')" title="Delete">
+                            🗑️
+                        </button>
+                        <button class="btn-icon" onclick="viewComic('${comic.id}')" title="View">
+                            👁️
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            // Update pagination
+            updatePagination(filteredComics.length);
+        }
+
+        // Update pagination
+        function updatePagination(totalItems) {
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            const pagination = document.getElementById('pagination');
+            
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+
+            let html = '<ul class="pagination-list">';
+            
+            // Previous button
+            html += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                <a href="#" class="page-link" onclick="changePage(${currentPage - 1})">←</a>
+            </li>`;
+
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+                    html += `<li class="page-item ${i === currentPage ? 'active' : ''}">
+                        <a href="#" class="page-link" onclick="changePage(${i})">${i}</a>
+                    </li>`;
+                } else if (i === currentPage - 3 || i === currentPage + 3) {
+                    html += '<li class="page-item disabled"><span class="page-link">...</span></li>';
+                }
+            }
+
+            // Next button
+            html += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                <a href="#" class="page-link" onclick="changePage(${currentPage + 1})">→</a>
+            </li>`;
+
+            html += '</ul>';
+            pagination.innerHTML = html;
+        }
+
+        // Change page
+        function changePage(page) {
+            currentPage = page;
+            displayComics();
+        }
+
+        // Filter comics
+        function filterComics() {
+            currentPage = 1;
+            displayComics();
+        }
+
+        // Search comics (debounced)
+        let searchTimeout;
+        document.getElementById('searchComics').addEventListener('input', () => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                currentPage = 1;
+                displayComics();
+            }, 300);
+        });
+
+        // Open add comic modal
+        function openAddComicModal() {
+            document.getElementById('modalTitle').textContent = 'Add New Comic';
+            document.getElementById('comicForm').reset();
+            document.getElementById('comicId').value = '';
+            document.getElementById('imagePreview').innerHTML = '';
+            openModal('comicModal');
+        }
+
+        // Edit comic
+        function editComic(comicId) {
+            const comic = comicsData.find(c => c.id === comicId);
+            if (!comic) return;
+
+            document.getElementById('modalTitle').textContent = 'Edit Comic';
+            document.getElementById('comicId').value = comic.id;
+            document.getElementById('title').value = comic.title || '';
+            document.getElementById('author').value = comic.author || '';
+            document.getElementById('price').value = comic.price || '';
+            document.getElementById('category').value = comic.category || '';
+            document.getElementById('description').value = comic.description || '';
+            document.getElementById('imageUrl').value = comic.imageUrl || '';
+            document.getElementById('stock').value = comic.stock || 0;
+            document.getElementById('publisher').value = comic.publisher || '';
+            document.getElementById('publicationDate').value = comic.publicationDate || '';
+            document.getElementById('pages').value = comic.pages || '';
+            document.getElementById('featured').checked = comic.featured || false;
+
+            if (comic.imageUrl) {
+                document.getElementById('imagePreview').innerHTML = 
+                    `<img src="${comic.imageUrl}" alt="Preview" style="max-width: 100%; max-height: 200px;">`;
+            }
+
+            openModal('comicModal');
+        }
+
+        // Delete comic
+        function deleteComic(comicId) {
+            comicToDelete = comicId;
+            openModal('deleteModal');
+        }
+
+        // Confirm delete
+        async function confirmDelete() {
+            if (!comicToDelete) return;
+
+            try {
+                await db.collection('comics').doc(comicToDelete).delete();
+                showNotification('Comic deleted successfully!', 'success');
+                closeModal('deleteModal');
+                loadComics();
+            } catch (error) {
+                console.error('Error deleting comic:', error);
+                showNotification('Error deleting comic', 'error');
+            }
+        }
+
+        // Upload image
+        async function uploadImage(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const storageRef = storage.ref();
+            const imageRef = storageRef.child(`comics/${Date.now()}_${file.name}`);
+
+            try {
+                showNotification('Uploading image...', 'info');
+                await imageRef.put(file);
+                const url = await imageRef.getDownloadURL();
+                
+                document.getElementById('imageUrl').value = url;
+                document.getElementById('imagePreview').innerHTML = 
+                    `<img src="${url}" alt="Preview" style="max-width: 100%; max-height: 200px;">`;
+                
+                showNotification('Image uploaded successfully!', 'success');
+            } catch (error) {
+                console.error('Error uploading image:', error);
+                showNotification('Error uploading image', 'error');
+            }
+        }
+
+        // View comic
+        function viewComic(comicId) {
+            window.open(`/pages/product.html?id=${comicId}`, '_blank');
+        }
+
+        // Form submission
+        document.getElementById('comicForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const comicId = document.getElementById('comicId').value;
+            const comicData = {
+                title: document.getElementById('title').value,
+                author: document.getElementById('author').value,
+                price: parseFloat(document.getElementById('price').value),
+                category: document.getElementById('category').value,
+                description: document.getElementById('description').value,
+                imageUrl: document.getElementById('imageUrl').value,
+                stock: parseInt(document.getElementById('stock').value),
+                publisher: document.getElementById('publisher').value,
+                publicationDate: document.getElementById('publicationDate').value,
+                pages: parseInt(document.getElementById('pages').value) || null,
+                featured: document.getElementById('featured').checked,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Saving...';
+
+            try {
+                if (comicId) {
+                    await db.collection('comics').doc(comicId).update(comicData);
+                    showNotification('Comic updated successfully!', 'success');
+                } else {
+                    comicData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                    await db.collection('comics').add(comicData);
+                    showNotification('Comic added successfully!', 'success');
+                }
+
+                closeModal('comicModal');
+                loadComics();
+            } catch (error) {
+                console.error('Error saving comic:', error);
+                showNotification('Error saving comic', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = comicId ? 'Update Comic' : 'Add Comic';
+            }
+        });
+
+        // Make functions global
+        window.openAddComicModal = openAddComicModal;
+        window.editComic = editComic;
+        window.deleteComic = deleteComic;
+        window.confirmDelete = confirmDelete;
+        window.filterComics = filterComics;
+        window.changePage = changePage;
+        window.viewComic = viewComic;
+        window.uploadImage = uploadImage;
+    </script>
+</body>
+</html>

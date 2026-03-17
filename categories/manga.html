@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manga - ComicVerse</title>
+    <meta name="description" content="Shop the best manga including Naruto, One Piece, Attack on Titan, and more. New releases and classic series available.">
+    <meta name="keywords" content="manga, anime, japanese comics, naruto, one piece, attack on titan, demon slayer, jujutsu kaisen">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="/" class="logo">COMICVERSE</a>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/pages/shop.html">Shop</a></li>
+                    <li><a href="/categories/marvel.html">Marvel</a></li>
+                    <li><a href="/categories/dc.html">DC</a></li>
+                    <li><a href="/categories/manga.html" class="active">Manga</a></li>
+                    <li><a href="/categories/indie.html">Indie</a></li>
+                    <li><a href="/pages/blog/index.html">Blog</a></li>
+                    <li><a href="/pages/cart.html">Cart</a></li>
+                    <li class="auth-links" id="authLinks"></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Category Hero -->
+        <section class="category-hero manga-hero">
+            <div class="container">
+                <h1 class="category-title">MANGA</h1>
+                <p class="category-subtitle">Discover the best Japanese comics - from Shonen to Seinen, Shojo to Josei</p>
+            </div>
+        </section>
+
+        <!-- Demographics Filter -->
+        <section class="demographics-filter">
+            <div class="container">
+                <div class="demo-buttons">
+                    <button class="demo-btn active" onclick="filterDemographic('all')">All</button>
+                    <button class="demo-btn" onclick="filterDemographic('Shonen')">Shonen</button>
+                    <button class="demo-btn" onclick="filterDemographic('Shojo')">Shojo</button>
+                    <button class="demo-btn" onclick="filterDemographic('Seinen')">Seinen</button>
+                    <button class="demo-btn" onclick="filterDemographic('Josei')">Josei</button>
+                    <button class="demo-btn" onclick="filterDemographic('Kodomo')">Kodomo</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popular Series -->
+        <section class="popular-series">
+            <div class="container">
+                <h2 class="section-title">POPULAR <span>SERIES</span></h2>
+                <div class="series-grid">
+                    <a href="#naruto" class="series-card">
+                        <img src="/assets/images/series/naruto.jpg" alt="Naruto">
+                        <span class="series-name">Naruto</span>
+                    </a>
+                    <a href="#one-piece" class="series-card">
+                        <img src="/assets/images/series/one-piece.jpg" alt="One Piece">
+                        <span class="series-name">One Piece</span>
+                    </a>
+                    <a href="#attack-on-titan" class="series-card">
+                        <img src="/assets/images/series/aot.jpg" alt="Attack on Titan">
+                        <span class="series-name">Attack on Titan</span>
+                    </a>
+                    <a href="#demon-slayer" class="series-card">
+                        <img src="/assets/images/series/demon-slayer.jpg" alt="Demon Slayer">
+                        <span class="series-name">Demon Slayer</span>
+                    </a>
+                    <a href="#jujutsu-kaisen" class="series-card">
+                        <img src="/assets/images/series/jujutsu-kaisen.jpg" alt="Jujutsu Kaisen">
+                        <span class="series-name">Jujutsu Kaisen</span>
+                    </a>
+                    <a href="#my-hero-academia" class="series-card">
+                        <img src="/assets/images/series/mha.jpg" alt="My Hero Academia">
+                        <span class="series-name">My Hero Academia</span>
+                    </a>
+                    <a href="#chainsaw-man" class="series-card">
+                        <img src="/assets/images/series/chainsaw-man.jpg" alt="Chainsaw Man">
+                        <span class="series-name">Chainsaw Man</span>
+                    </a>
+                    <a href="#spy-x-family" class="series-card">
+                        <img src="/assets/images/series/spy-x-family.jpg" alt="Spy x Family">
+                        <span class="series-name">Spy x Family</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Manga Grid -->
+        <section class="category-comics">
+            <div class="container">
+                <h2 class="section-title">MANGA <span>COLLECTION</span></h2>
+                
+                <!-- Filters -->
+                <div class="manga-filters">
+                    <select id="genreFilter" class="filter-select">
+                        <option value="all">All Genres</option>
+                        <option value="Action">Action</option>
+                        <option value="Adventure">Adventure</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Fantasy">Fantasy</option>
+                        <option value="Horror">Horror</option>
+                        <option value="Romance">Romance</option>
+                        <option value="Sci-Fi">Sci-Fi</option>
+                        <option value="Slice of Life">Slice of Life</option>
+                        <option value="Sports">Sports</option>
+                    </select>
+
+                    <select id="sortBy" class="filter-select">
+                        <option value="featured">Featured</option>
+                        <option value="newest">Newest</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="title">Title A-Z</option>
+                    </select>
+                </div>
+
+                <!-- Comics Grid -->
+                <div class="comics-grid" id="categoryComics">
+                    <!-- Comics will be loaded here -->
+                    <div class="loading-spinner"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Box Sets Section -->
+        <section class="boxsets-section">
+            <div class="container">
+                <h2 class="section-title">MANGA <span>BOX SETS</span></h2>
+                <p class="boxset-description">Complete your collection with these value-packed box sets</p>
+                <div class="comics-grid" id="boxsetComics">
+                    <!-- Box sets will be loaded here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>About ComicVerse</h3>
+                    <p>Your premier destination for manga and comics from all publishers.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/pages/shop.html">Shop</a></li>
+                        <li><a href="/pages/blog/index.html">Blog</a></li>
+                        <li><a href="/pages/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="/categories/marvel.html">Marvel</a></li>
+                        <li><a href="/categories/dc.html">DC</a></li>
+                        <li><a href="/categories/manga.html">Manga</a></li>
+                        <li><a href="/categories/indie.html">Indie</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 ComicVerse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .manga-hero {
+            background-image: url('/assets/images/categories/manga-hero.jpg');
+        }
+
+        .demographics-filter {
+            padding: 2rem 0;
+            background-color: var(--darker-bg);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .demo-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .demo-btn {
+            padding: 0.5rem 1.5rem;
+            background: none;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .demo-btn:hover,
+        .demo-btn.active {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--darker-bg);
+        }
+
+        .popular-series {
+            padding: 4rem 0;
+        }
+
+        .series-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .series-card {
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .series-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .series-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .series-name {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .manga-filters {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-bottom: 2rem;
+        }
+
+        .boxsets-section {
+            padding: 4rem 0;
+            background-color: var(--darker-bg);
+            margin-top: 2rem;
+        }
+
+        .boxset-description {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .category-hero {
+            background-size: cover;
+            background-position: center;
+            padding: 6rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .category-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 100%);
+        }
+
+        .category-hero .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .category-title {
+            font-family: 'Bangers', cursive;
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 0 var(--secondary-color);
+        }
+
+        .category-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .category-title {
+                font-size: 2.5rem;
+            }
+            
+            .manga-filters {
+                flex-direction: column;
+            }
+            
+            .series-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+
+    <script src="/js/firebase-config.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/cart.js"></script>
+    <script>
+        let currentDemographic = 'all';
+        let currentGenre = 'all';
+
+        // Load manga
+        async function loadManga() {
+            try {
+                let query = db.collection('comics').where('category', '==', 'Manga');
+                
+                // Apply demographic filter
+                if (currentDemographic !== 'all') {
+                    query = query.where('demographic', '==', currentDemographic);
+                }
+                
+                // Apply genre filter
+                if (currentGenre !== 'all') {
+                    query = query.where('genre', 'array-contains', currentGenre);
+                }
+
+                const snapshot = await query.orderBy('createdAt', 'desc').get();
+
+                const comicsGrid = document.getElementById('categoryComics');
+                
+                if (snapshot.empty) {
+                    comicsGrid.innerHTML = '<p class="no-results">No manga found</p>';
+                    return;
+                }
+
+                comicsGrid.innerHTML = '';
+
+                snapshot.forEach(doc => {
+                    const comic = doc.data();
+                    const comicCard = createComicCard({ id: doc.id, ...comic });
+                    comicsGrid.appendChild(comicCard);
+                });
+
+                // Load box sets
+                await loadBoxSets();
+
+            } catch (error) {
+                console.error('Error loading manga:', error);
+                document.getElementById('categoryComics').innerHTML = 
+                    '<p class="no-results">Error loading manga</p>';
+            }
+        }
+
+        // Load box sets
+        async function loadBoxSets() {
+            try {
+                const snapshot = await db.collection('comics')
+                    .where('category', '==', 'Manga')
+                    .where('isBoxSet', '==', true)
+                    .limit(4)
+                    .get();
+
+                const boxsetGrid = document.getElementById('boxsetComics');
+                
+                if (snapshot.empty) {
+                    boxsetGrid.innerHTML = '<p class="no-results">No box sets available</p>';
+                    return;
+                }
+
+                boxsetGrid.innerHTML = '';
+
+                snapshot.forEach(doc => {
+                    const comic = doc.data();
+                    const comicCard = createComicCard({ id: doc.id, ...comic });
+                    boxsetGrid.appendChild(comicCard);
+                });
+
+            } catch (error) {
+                console.error('Error loading box sets:', error);
+            }
+        }
+
+        // Filter by demographic
+        function filterDemographic(demographic) {
+            currentDemographic = demographic;
+            
+            // Update active button
+            document.querySelectorAll('.demo-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Reload comics
+            loadManga();
+        }
+
+        // Create comic card
+        function createComicCard(comic) {
+            const card = document.createElement('div');
+            card.className = 'comic-card';
+            card.setAttribute('data-id', comic.id);
+            
+            card.innerHTML = `
+                <img src="${comic.imageUrl || '/assets/images/placeholder.jpg'}" 
+                     alt="${comic.title}"
+                     loading="lazy"
+                     onerror="this.src='/assets/images/placeholder.jpg'">
+                <div class="comic-info">
+                    <h3 class="comic-title">${comic.title}</h3>
+                    <p class="comic-author">by ${comic.author || 'Unknown'}</p>
+                    <p class="comic-price">$${comic.price?.toFixed(2) || '0.00'}</p>
+                    <div class="comic-actions">
+                        <button class="btn btn-primary add-to-cart" onclick="event.stopPropagation(); cart.addItem('${comic.id}')">
+                            Add to Cart
+                        </button>
+                        <button class="btn btn-secondary view-details" onclick="window.location.href='/pages/product.html?id=${comic.id}'">
+                            Details
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            card.addEventListener('click', (e) => {
+                if (!e.target.classList.contains('btn')) {
+                    window.location.href = `/pages/product.html?id=${comic.id}`;
+                }
+            });
+
+            return card;
+        }
+
+        // Genre filter
+        document.getElementById('genreFilter').addEventListener('change', (e) => {
+            currentGenre = e.target.value;
+            loadManga();
+        });
+
+        // Sort comics
+        document.getElementById('sortBy').addEventListener('change', async (e) => {
+            const sortBy = e.target.value;
+            const comicsGrid = document.getElementById('categoryComics');
+            
+            try {
+                let query = db.collection('comics').where('category', '==', 'Manga');
+                
+                if (currentDemographic !== 'all') {
+                    query = query.where('demographic', '==', currentDemographic);
+                }
+                
+                if (currentGenre !== 'all') {
+                    query = query.where('genre', 'array-contains', currentGenre);
+                }
+                
+                switch(sortBy) {
+                    case 'price-asc':
+                        query = query.orderBy('price', 'asc');
+                        break;
+                    case 'price-desc':
+                        query = query.orderBy('price', 'desc');
+                        break;
+                    case 'title':
+                        query = query.orderBy('title', 'asc');
+                        break;
+                    case 'newest':
+                        query = query.orderBy('createdAt', 'desc');
+                        break;
+                    default:
+                        query = query.orderBy('createdAt', 'desc');
+                }
+
+                const snapshot = await query.get();
+                
+                comicsGrid.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const comic = doc.data();
+                    const comicCard = createComicCard({ id: doc.id, ...comic });
+                    comicsGrid.appendChild(comicCard);
+                });
+
+            } catch (error) {
+                console.error('Error sorting comics:', error);
+            }
+        });
+
+        // Load comics on page load
+        document.addEventListener('DOMContentLoaded', loadManga);
+
+        // Make filter function global
+        window.filterDemographic = filterDemographic;
+    </script>
+</body>
+</html>

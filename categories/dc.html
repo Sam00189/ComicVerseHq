@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DC Comics - ComicVerse</title>
+    <meta name="description" content="Shop the best DC comics including Batman, Superman, Wonder Woman, and more. New releases and classic issues available.">
+    <meta name="keywords" content="dc comics, batman, superman, wonder woman, flash, aquaman, justice league">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="/" class="logo">COMICVERSE</a>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/pages/shop.html">Shop</a></li>
+                    <li><a href="/categories/marvel.html">Marvel</a></li>
+                    <li><a href="/categories/dc.html" class="active">DC</a></li>
+                    <li><a href="/categories/manga.html">Manga</a></li>
+                    <li><a href="/categories/indie.html">Indie</a></li>
+                    <li><a href="/pages/blog/index.html">Blog</a></li>
+                    <li><a href="/pages/cart.html">Cart</a></li>
+                    <li class="auth-links" id="authLinks"></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Category Hero -->
+        <section class="category-hero dc-hero">
+            <div class="container">
+                <h1 class="category-title">DC COMICS</h1>
+                <p class="category-subtitle">The Dark Knight, The Man of Steel, and The Amazon Princess await you</p>
+            </div>
+        </section>
+
+        <!-- Subcategories -->
+        <section class="subcategories">
+            <div class="container">
+                <div class="subcategory-grid">
+                    <a href="#batman" class="subcategory-card">
+                        <img src="/assets/images/categories/batman.jpg" alt="Batman">
+                        <h3>Batman</h3>
+                    </a>
+                    <a href="#superman" class="subcategory-card">
+                        <img src="/assets/images/categories/superman.jpg" alt="Superman">
+                        <h3>Superman</h3>
+                    </a>
+                    <a href="#wonder-woman" class="subcategory-card">
+                        <img src="/assets/images/categories/wonder-woman.jpg" alt="Wonder Woman">
+                        <h3>Wonder Woman</h3>
+                    </a>
+                    <a href="#flash" class="subcategory-card">
+                        <img src="/assets/images/categories/flash.jpg" alt="The Flash">
+                        <h3>The Flash</h3>
+                    </a>
+                    <a href="#aquaman" class="subcategory-card">
+                        <img src="/assets/images/categories/aquaman.jpg" alt="Aquaman">
+                        <h3>Aquaman</h3>
+                    </a>
+                    <a href="#justice-league" class="subcategory-card">
+                        <img src="/assets/images/categories/justice-league.jpg" alt="Justice League">
+                        <h3>Justice League</h3>
+                    </a>
+                    <a href="#green-lantern" class="subcategory-card">
+                        <img src="/assets/images/categories/green-lantern.jpg" alt="Green Lantern">
+                        <h3>Green Lantern</h3>
+                    </a>
+                    <a href="#shazam" class="subcategory-card">
+                        <img src="/assets/images/categories/shazam.jpg" alt="Shazam">
+                        <h3>Shazam</h3>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Category Comics -->
+        <section class="category-comics">
+            <div class="container">
+                <h2 class="section-title">DC <span>COMICS</span></h2>
+                
+                <!-- Filters -->
+                <div class="category-filters">
+                    <select id="sortBy" class="filter-select">
+                        <option value="featured">Featured</option>
+                        <option value="newest">Newest</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="title">Title A-Z</option>
+                    </select>
+                </div>
+
+                <!-- Comics Grid -->
+                <div class="comics-grid" id="categoryComics">
+                    <!-- Comics will be loaded here -->
+                    <div class="loading-spinner"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Black Label Section -->
+        <section class="imprint-section">
+            <div class="container">
+                <h2 class="section-title">DC <span>BLACK LABEL</span></h2>
+                <p class="imprint-description">Mature, standalone stories from the best creators in the industry</p>
+                <div class="comics-grid" id="blackLabelComics">
+                    <!-- Black Label comics will be loaded here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>About ComicVerse</h3>
+                    <p>Your premier destination for comic books from all publishers.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/pages/shop.html">Shop</a></li>
+                        <li><a href="/pages/blog/index.html">Blog</a></li>
+                        <li><a href="/pages/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="/categories/marvel.html">Marvel</a></li>
+                        <li><a href="/categories/dc.html">DC</a></li>
+                        <li><a href="/categories/manga.html">Manga</a></li>
+                        <li><a href="/categories/indie.html">Indie</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 ComicVerse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .dc-hero {
+            background-image: url('/assets/images/categories/dc-hero.jpg');
+        }
+
+        .imprint-section {
+            padding: 4rem 0;
+            background-color: var(--darker-bg);
+            margin-top: 2rem;
+        }
+
+        .imprint-description {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .category-hero {
+            background-size: cover;
+            background-position: center;
+            padding: 6rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .category-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 100%);
+        }
+
+        .category-hero .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .category-title {
+            font-family: 'Bangers', cursive;
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 0 var(--secondary-color);
+        }
+
+        .category-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .subcategories {
+            padding: 3rem 0;
+            background-color: var(--darker-bg);
+        }
+
+        .subcategory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .subcategory-card {
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .subcategory-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .subcategory-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .subcategory-card h3 {
+            font-size: 1rem;
+            color: var(--primary-color);
+        }
+
+        .category-filters {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 2rem;
+        }
+
+        .filter-select {
+            padding: 0.5rem 1rem;
+            background-color: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        .filter-select:focus {
+            outline: none;
+        }
+
+        @media (max-width: 768px) {
+            .category-title {
+                font-size: 2.5rem;
+            }
+            
+            .subcategory-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+
+    <script src="/js/firebase-config.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/cart.js"></script>
+    <script>
+        // Load DC comics
+        async function loadDCComics() {
+            try {
+                const snapshot = await db.collection('comics')
+                    .where('category', '==', 'DC')
+                    .orderBy('createdAt', 'desc')
+                    .get();
+
+                const comicsGrid = document.getElementById('categoryComics');
+                
+                if (snapshot.empty) {
+                    comicsGrid.innerHTML = '<p class="no-results">No DC comics found</p>';
+                    return;
+                }
+
+                comicsGrid.innerHTML = '';
+
+                snapshot.forEach(doc => {
+                    const comic = doc.data();
+                    const comicCard = createComicCard({ id: doc.id, ...comic });
+                    comicsGrid.appendChild(comicCard);
+                });
+
+                // Load Black Label comics separately
+                await loadBlackLabelComics();
+
+            } catch (error) {
+                console.error('Error loading DC comics:', error);
+                document.getElementById('categoryComics').innerHTML = 
+                    '<p class="no-results">Error loading comics</p>';
+            }
+        }
+
+        // Load Black Label comics
+        async function loadBlackLabelComics() {
+            try {
+                const snapshot = await db.collection('comics')
+                    .where('category', '==', 'DC')
+                    .where('imprint', '==', 'Black Label')
+                    .limit(4)
+                    .get();
+
+                const blackLabelGrid = document.getElementById('blackLabelComics');
+                
+                if (snapshot.empty) {
+                    blackLabelGrid.innerHTML = '<p class="no-results">No Black Label comics available</p>';
+                    return;
+                }
+
+                blackLabelGrid.innerHTML = '';
+
+                snapshot.forEach(doc => {
+                    const comic = doc.data();
+                    const comicCard = createComicCard({ id: doc.id, ...comic });
+                    blackLabelGrid.appendChild(comicCard);
+                });
+
+            } catch (error) {
+                console.error('Error loading Black Label comics:', error);
+            }
+        }
+
+        // Create comic card (reuse from main.js)
+        function createComicCard(comic) {
+            const card = document.createElement('div');
+            card.className = 'comic-card';
+            card.setAttribute('data-id', comic.id);
+            
+            card.innerHTML = `
+                <img src="${comic.imageUrl || '/assets/images/placeholder.jpg'}" 
+                     alt="${comic.title}"
+                     loading="lazy"
+                     onerror="this.src='/assets/images/placeholder.jpg'">
+                <div class="comic-info">
+                    <h3 class="comic-title">${comic.title}</h3>
+                    <p class="comic-author">by ${comic.author || 'Unknown'}</p>
+                    <p class="comic-price">$${comic.price?.toFixed(2) || '0.00'}</p>
+                    <div class="comic-actions">
+                        <button class="btn btn-primary add-to-cart" onclick="event.stopPropagation(); cart.addItem('${comic.id}')">
+                            Add to Cart
+                        </button>
+                        <button class="btn btn-secondary view-details" onclick="window.location.href='/pages/product.html?id=${comic.id}'">
+                            Details
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            card.addEventListener('click', (e) => {
+                if (!e.target.classList.contains('btn')) {
+                    window.location.href = `/pages/product.html?id=${comic.id}`;
+                }
+            });
+
+            return card;
+        }
+
+        // Sort comics
+        document.getElementById('sortBy').addEventListener('change', async (e) => {
+            const sortBy = e.target.value;
+            const comicsGrid = document.getElementById('categoryComics');
+            
+            try {
+                let query = db.collection('comics').where('category', '==', 'DC');
+                
+                switch(sortBy) {
+                    case 'price-asc':
+                        query = query.orderBy('price', 'asc');
+                        break;
+                    case 'price-desc':
+                        query = query.orderBy('price', 'desc');
+                        break;
+                    case 'title':
+                        query = query.orderBy('title', 'asc');
+                        break;
+                    case 'newest':
+                        query = query.orderBy('createdAt', 'desc');
+                        break;
+                    default:
+                        query = query.orderBy('createdAt', 'desc');
+                }
+
+                const snapshot = await query.get();
+                
+                comicsGrid.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const comic = doc.data();
+                    const comicCard = createComicCard({ id: doc.id, ...comic });
+                    comicsGrid.appendChild(comicCard);
+                });
+
+            } catch (error) {
+                console.error('Error sorting comics:', error);
+            }
+        });
+
+        // Load comics on page load
+        document.addEventListener('DOMContentLoaded', loadDCComics);
+    </script>
+</body>
+</html>

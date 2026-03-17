@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indie Comics - ComicVerse</title>
+    <meta name="description" content="Discover the best independent comics from publishers like Image, Dark Horse, Boom! Studios, and more. Support indie creators.">
+    <meta name="keywords" content="indie comics, independent comics, image comics, dark horse, boom studios, graphic novels">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="/" class="logo">COMICVERSE</a>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/pages/shop.html">Shop</a></li>
+                    <li><a href="/categories/marvel.html">Marvel</a></li>
+                    <li><a href="/categories/dc.html">DC</a></li>
+                    <li><a href="/categories/manga.html">Manga</a></li>
+                    <li><a href="/categories/indie.html" class="active">Indie</a></li>
+                    <li><a href="/pages/blog/index.html">Blog</a></li>
+                    <li><a href="/pages/cart.html">Cart</a></li>
+                    <li class="auth-links" id="authLinks"></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Category Hero -->
+        <section class="category-hero indie-hero">
+            <div class="container">
+                <h1 class="category-title">INDIE COMICS</h1>
+                <p class="category-subtitle">Discover groundbreaking stories from independent publishers and creators</p>
+            </div>
+        </section>
+
+        <!-- Publishers Grid -->
+        <section class="publishers-section">
+            <div class="container">
+                <h2 class="section-title">FEATURED <span>PUBLISHERS</span></h2>
+                <div class="publishers-grid">
+                    <a href="#image" class="publisher-card">
+                        <img src="/assets/images/publishers/image.jpg" alt="Image Comics">
+                        <h3>Image Comics</h3>
+                    </a>
+                    <a href="#dark-horse" class="publisher-card">
+                        <img src="/assets/images/publishers/dark-horse.jpg" alt="Dark Horse">
+                        <h3>Dark Horse</h3>
+                    </a>
+                    <a href="#boom" class="publisher-card">
+                        <img src="/assets/images/publishers/boom.jpg" alt="Boom! Studios">
+                        <h3>Boom! Studios</h3>
+                    </a>
+                    <a href="#dynamite" class="publisher-card">
+                        <img src="/assets/images/publishers/dynamite.jpg" alt="Dynamite">
+                        <h3>Dynamite</h3>
+                    </a>
+                    <a href="#idw" class="publisher-card">
+                        <img src="/assets/images/publishers/idw.jpg" alt="IDW">
+                        <h3>IDW Publishing</h3>
+                    </a>
+                    <a href="#valiant" class="publisher-card">
+                        <img src="/assets/images/publishers/valiant.jpg" alt="Valiant">
+                        <h3>Valiant Comics</h3>
+                    </a>
+                    <a href="#oni" class="publisher-card">
+                        <img src="/assets/images/publishers/oni.jpg" alt="Oni Press">
+                        <h3>Oni Press</h3>
+                    </a>
+                    <a href="#fantagraphics" class="publisher-card">
+                        <img src="/assets/images/publishers/fantagraphics.jpg" alt="Fantagraphics">
+                        <h3>Fantagraphics</h3>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Award Winners Section -->
+        <section class="award-winners">
+            <div class="container">
+                <h2 class="section-title">AWARD <span>WINNERS</span></h2>
+                <div class="comics-grid" id="awardWinners">
+                    <!-- Award winners will be loaded here -->
+                    <div class="loading-spinner"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Indie Grid -->
+        <section class="category-comics">
+            <div class="container">
+                <h2 class="section-title">INDIE <span>COMICS</span></h2>
+                
+                <!-- Filters -->
+                <div class="indie-filters">
+                    <select id="publisherFilter" class="filter-select">
+                        <option value="all">All Publishers</option>
+                        <option value="Image Comics">Image Comics</option>
+                        <option value="Dark Horse">Dark Horse</option>
+                        <option value="Boom! Studios">Boom! Studios</option>
+                        <option value="Dynamite">Dynamite</option>
+                        <option value="IDW">IDW Publishing</option>
+                        <option value="Valiant">Valiant Comics</option>
+                        <option value="Oni Press">Oni Press</option>
+                        <option value="Fantagraphics">Fantagraphics</option>
+                    </select>
+
+                    <select id="genreFilter" class="filter-select">
+                        <option value="all">All Genres</option>
+                        <option value="Horror">Horror</option>
+                        <option value="Sci-Fi">Sci-Fi</option>
+                        <option value="Fantasy">Fantasy</option>
+                        <option value="Crime">Crime</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Superhero">Superhero</option>
+                        <option value="Slice of Life">Slice of Life</option>
+                    </select>
+
+                    <select id="sortBy" class="filter-select">
+                        <option value="featured">Featured</option>
+                        <option value="newest">Newest</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="title">Title A-Z</option>
+                    </select>
+                </div>
+
+                <!-- Comics Grid -->
+                <div class="comics-grid" id="categoryComics">
+                    <!-- Comics will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Creator Spotlight -->
+        <section class="creator-spotlight">
+            <div class="container">
+                <h2 class="section-title">CREATOR <span>SPOTLIGHT</span></h2>
+                <div class="spotlight-grid">
+                    <div class="spotlight-card">
+                        <img src="/assets/images/creators/robert-kirkman.jpg" alt="Robert Kirkman">
+                        <h3>Robert Kirkman</h3>
+                        <p>The Walking Dead, Invincible</p>
+                        <a href="#kirkman" class="btn btn-outline btn-small">View Comics</a>
+                    </div>
+                    <div class="spotlight-card">
+                        <img src="/assets/images/creators/brian-vaughan.jpg" alt="Brian K. Vaughan">
+                        <h3>Brian K. Vaughan</h3>
+                        <p>Saga, Y: The Last Man</p>
+                        <a href="#vaughan" class="btn btn-outline btn-small">View Comics</a>
+                    </div>
+                    <div class="spotlight-card">
+                        <img src="/assets/images/creators/fiona-staples.jpg" alt="Fiona Staples">
+                        <h3>Fiona Staples</h3>
+                        <p>Saga, Archie</p>
+                        <a href="#staples" class="btn btn-outline btn-small">View Comics</a>
+                    </div>
+                    <div class="spotlight-card">
+                        <img src="/assets/images/creators/jeff-lemire.jpg" alt="Jeff Lemire">
+                        <h3>Jeff Lemire</h3>
+                        <p>Sweet Tooth, Essex County</p>
+                        <a href="#lemire" class="btn btn-outline btn-small">View Comics</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>About ComicVerse</h3>
+                    <p>Supporting independent creators and bringing you the best in indie comics.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/pages/shop.html">Shop</a></li>
+                        <li><a href="/pages/blog/index.html">Blog</a></li>
+                        <li><a href="/pages/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="/categories/marvel.html">Marvel</a></li>
+                        <li><a href="/categories/dc.html">DC</a></li>
+                        <li><a href="/categories/manga.html">Manga</a></li>
+                        <li><a href="/categories/indie.html">Indie</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 ComicVerse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .indie-hero {
+            background-image: url('/assets/images/categories/indie-hero.jpg');
+        }
+
+        .publishers-section {
+            padding: 4rem 0;
+        }
+
+        .publishers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .publisher-card {
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .publisher-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .publisher-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .publisher-card h3 {
+            font-size: 1rem;
+            color: var(--primary-color);
+        }
+
+        .award-winners {
+            padding: 4rem 0;
+            background-color: var(--darker-bg);
+        }
+
+        .indie-filters {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .creator-spotlight {
+            padding: 4rem 0;
+            background-color: var(--darker-bg);
+            margin-top: 2rem;
+        }
+
+        .spotlight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .spotlight-card {
+            text-align: center;
+            background-color: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .spotlight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .spotlight-card img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            margin-bottom: 1rem;
+            object-fit: cover;
+        }
+
+        .spotlight-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .spotlight-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .category-hero {
+            background-size: cover;
+            background-position: center;
+            padding: 6rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .category-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 100%);
+        }
+
+        .category-hero .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .category-title {
+            font-family: 'Bangers', cursive;
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 0 var(--secondary-color);
+        }
+
+        .category-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .category-title {
+                font-size: 2.5rem;
+            }
+            
+            .indie-filters {
+                flex-direction: column;
+            }
+            
+            .publishers-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .spotlight-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+
+    <script src="/js/firebase-config.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/cart.js"></script>
+    <script>
+        let currentPublisher = 'all';
+        let currentGenre = 'all';
+
+        // Load indie comics
+        async function loadIndieComics() {
+            try {
+                let query = db.collection('comics').where('category', '==', 'Indie');
+                
+                // Apply publisher filter
+                if (currentPublisher !== 'all') {
+                    query = query.where('publisher', '==', currentPublisher);
+                }
+                
+                // Apply genre filter
+                if (currentGenre !== 'all') {
+                    query = query.where('genre', 'array-contains', currentGenre);
+                }
+
+                const snapshot = await query.orderBy('createdAt', 'desc').get();
+
+                const comicsGrid = document.getElementById('categoryComics');
+                
+                if (snapshot.empty) {
+                    comicsGrid.innerHTML = '<p class="no-results">No indie comics found</p>';
+                    return;
+                }
+
+                comicsGrid.innerHTML = '';
+
+                snapshot.forEach(doc => {
+                    const comic = doc.data();
+                    const comicCard = createComicCard({ id: doc.id, ...comic });
+                    comicsGrid.appendChild(comicCard);
+                });
+
+                // Load award winners
+                await loadAwardWinners();
+
+            } catch (error) {
+                console.error('Error loading indie comics:', error);
+                document.getElementById('categoryComics').innerHTML = 
+                    '<p class="no-results">Error loading comics</p>';
+            }
+        }
+
+        // Load award winners
+        async function loadAwardWinners() {
+            try {
+                const snapshot = await db.collection('comics')
+                    .where('category', '==', 'Indie')
+                    .where('awardWinner', '==', true)
+                    .limit(4)
+                    .get();
+
+                const awardGrid = document.getElementById('awardWinners');
+                
+                if (snapshot.empty) {
+                    awardGrid.innerHTML = '<p class="no-results">No award winners available</p>';
+                    return;
+                }
+
+                awardGrid.innerHTML = '';
+
+                snapshot.forEach(doc => {
+                    const comic = doc.data();
+                    const comicCard = createComicCard({ id: doc.id, ...comic });
+                    awardGrid.appendChild(comicCard);
+                });
+
+            } catch (error) {
+                console.error('Error loading award winners:', error);
+            }
+        }
+
+        // Create comic card
+        function createComicCard(comic) {
+            const card = document.createElement('div');
+            card.className = 'comic-card';
+            card.setAttribute('data-id', comic.id);
+            
+            // Add award badge if applicable
+            const awardBadge = comic.awardWinner ? '<span class="award-badge">🏆 Award Winner</span>' : '';
+            
+            card.innerHTML = `
+                <img src="${comic.imageUrl || '/assets/images/placeholder.jpg'}" 
+                     alt="${comic.title}"
+                     loading="lazy"
+                     onerror="this.src='/assets/images/placeholder.jpg'">
+                ${awardBadge}
+                <div class="comic-info">
+                    <h3 class="comic-title">${comic.title}</h3>
+                    <p class="comic-author">by ${comic.author || 'Unknown'}</p>
+                    <p class="comic-price">$${comic.price?.toFixed(2) || '0.00'}</p>
+                    <div class="comic-actions">
+                        <button class="btn btn-primary add-to-cart" onclick="event.stopPropagation(); cart.addItem('${comic.id}')">
+                            Add to Cart
+                        </button>
+                        <button class="btn btn-secondary view-details" onclick="window.location.href='/pages/product.html?id=${comic.id}'">
+                            Details
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            card.addEventListener('click', (e) => {
+                if (!e.target.classList.contains('btn')) {
+                    window.location.href = `/pages/product.html?id=${comic.id}`;
+                }
+            });
+
+            return card;
+        }
+
+        // Publisher filter
+        document.getElementById('publisherFilter').addEventListener('change', (e) => {
+            currentPublisher = e.target.value;
+            loadIndieComics();
+        });
+
+        // Genre filter
+        document.getElementById('genreFilter').addEventListener('change', (e) => {
+            currentGenre = e.target.value;
+            loadIndieComics();
+        });
+
+        // Sort comics
+        document.getElementById('sortBy').addEventListener('change', async (e) => {
+            const sortBy = e.target.value;
+            const comicsGrid = document.getElementById('categoryComics');
+            
+            try {
+                let query = db.collection('comics').where('category', '==', 'Indie');
+                
+                if (currentPublisher !== 'all') {
+                    query = query.where('publisher', '==', currentPublisher);
+                }
+                
+                if (currentGenre !== 'all') {
+                    query = query.where('genre', 'array-contains', currentGenre);
+                }
+                
+                switch(sortBy) {
+                    case 'price-asc':
+                        query = query.orderBy('price', 'asc');
+                        break;
+                    case 'price-desc':
+                        query = query.orderBy('price', 'desc');
+                        break;
+                    case 'title':
+                        query = query.orderBy('title', 'asc');
+                        break;
+                    case 'newest':
+                        query = query.orderBy('createdAt', 'desc');
+                        break;
+                    default:
+                        query = query.orderBy('createdAt', 'desc');
+                }
+
+                const snapshot = await query.get();
+                
+                comicsGrid.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const comic = doc.data();
+                    const comicCard = createComicCard({ id: doc.id, ...comic });
+                    comicsGrid.appendChild(comicCard);
+                });
+
+            } catch (error) {
+                console.error('Error sorting comics:', error);
+            }
+        });
+
+        // Load comics on page load
+        document.addEventListener('DOMContentLoaded', loadIndieComics);
+    </script>
+</body>
+</html>

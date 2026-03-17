@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comic Blog - ComicVerse</title>
+    <meta name="description" content="Read the latest comic news, reviews, and trends. Stay updated with the comic world.">
+    <meta name="keywords" content="comic blog, comic news, comic reviews, manga news, marvel news, dc news">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Comic Blog - ComicVerse">
+    <meta property="og:description" content="Read the latest comic news, reviews, and trends.">
+    <meta property="og:image" content="https://comicverse.web.app/assets/images/og-blog.jpg">
+    <meta property="og:url" content="https://comicverse.web.app/pages/blog/index.html">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="/" class="logo">COMICVERSE</a>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/pages/shop.html">Shop</a></li>
+                    <li><a href="/categories/marvel.html">Marvel</a></li>
+                    <li><a href="/categories/dc.html">DC</a></li>
+                    <li><a href="/categories/manga.html">Manga</a></li>
+                    <li><a href="/categories/indie.html">Indie</a></li>
+                    <li><a href="/pages/blog/index.html" class="active">Blog</a></li>
+                    <li><a href="/pages/cart.html">Cart</a></li>
+                    <li class="auth-links" id="authLinks"></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Blog Hero -->
+        <section class="blog-hero">
+            <div class="container">
+                <h1 class="blog-hero-title">COMICVERSE BLOG</h1>
+                <p class="blog-hero-subtitle">News, Reviews, and Insights from the Comic World</p>
+                
+                <!-- Search Bar -->
+                <div class="blog-search">
+                    <input type="text" id="blogSearch" placeholder="Search articles...">
+                    <button class="btn btn-primary" onclick="searchBlog()">Search</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Tabs -->
+        <div class="blog-categories">
+            <div class="container">
+                <button class="category-tab active" onclick="filterPosts('all')">All Posts</button>
+                <button class="category-tab" onclick="filterPosts('news')">News</button>
+                <button class="category-tab" onclick="filterPosts('reviews')">Reviews</button>
+                <button class="category-tab" onclick="filterPosts('features')">Features</button>
+                <button class="category-tab" onclick="filterPosts('interviews')">Interviews</button>
+            </div>
+        </div>
+
+        <!-- Featured Post -->
+        <section class="featured-post">
+            <div class="container">
+                <div id="featuredPost" class="featured-post-card">
+                    <!-- Featured post will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Grid -->
+        <section class="blog-grid-section">
+            <div class="container">
+                <div class="blog-grid" id="blogGrid">
+                    <!-- Blog posts will be loaded here -->
+                    <div class="loading-spinner"></div>
+                </div>
+
+                <!-- Load More Button -->
+                <div class="load-more">
+                    <button class="btn btn-outline" id="loadMoreBtn" onclick="loadMorePosts()" style="display: none;">
+                        Load More Posts
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="blog-newsletter">
+            <div class="container">
+                <div class="newsletter-content">
+                    <h2>Never Miss a Post</h2>
+                    <p>Subscribe to our newsletter for the latest comic news and reviews</p>
+                    <form class="newsletter-form" id="blogNewsletterForm">
+                        <input type="email" placeholder="Enter your email" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>About ComicVerse</h3>
+                    <p>Your premier destination for comic books and news from all publishers.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/pages/shop.html">Shop</a></li>
+                        <li><a href="/pages/blog/index.html">Blog</a></li>
+                        <li><a href="/pages/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="/categories/marvel.html">Marvel</a></li>
+                        <li><a href="/categories/dc.html">DC</a></li>
+                        <li><a href="/categories/manga.html">Manga</a></li>
+                        <li><a href="/categories/indie.html">Indie</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 ComicVerse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .blog-hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            padding: 4rem 0;
+            text-align: center;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .blog-hero-title {
+            font-family: 'Bangers', cursive;
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 0 var(--secondary-color);
+        }
+
+        .blog-hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .blog-search {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .blog-search input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .blog-search input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .blog-categories {
+            background-color: var(--darker-bg);
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .blog-categories .container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 0.5rem 1.5rem;
+            background: none;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .category-tab:hover,
+        .category-tab.active {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--darker-bg);
+        }
+
+        .featured-post {
+            padding: 3rem 0;
+        }
+
+        .featured-post-card {
+            background-color: var(--card-bg);
+            border: 3px solid var(--primary-color);
+            border-radius: 15px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .featured-post-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .featured-post-content {
+            padding: 2rem;
+        }
+
+        .featured-post-meta {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .featured-post-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-family: 'Bangers', cursive;
+        }
+
+        .featured-post-excerpt {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .blog-grid-section {
+            padding: 3rem 0;
+        }
+
+        .blog-newsletter {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .blog-newsletter h2 {
+            color: var(--darker-bg);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-newsletter p {
+            color: var(--darker-bg);
+            margin-bottom: 2rem;
+        }
+
+        .load-more {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .featured-post-card {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-post-image {
+                height: 300px;
+            }
+            
+            .blog-hero-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+
+    <script src="/js/firebase-config.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/cart.js"></script>
+    <script>
+        let lastVisible = null;
+        let currentCategory = 'all';
+        let loading = false;
+
+        // Load blog posts on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadFeaturedPost();
+            loadBlogPosts();
+        });
+
+        // Load featured post
+        async function loadFeaturedPost() {
+            try {
+                const snapshot = await db.collection('blog')
+                    .where('featured', '==', true)
+                    .orderBy('createdAt', 'desc')
+                    .limit(1)
+                    .get();
+
+                const featuredDiv = document.getElementById('featuredPost');
+                
+                if (snapshot.empty) {
+                    featuredDiv.style.display = 'none';
+                    return;
+                }
+
+                snapshot.forEach(doc => {
+                    const post = doc.data();
+                    const date = post.createdAt ? post.createdAt.toDate().toLocaleDateString() : 'No date';
+                    
+                    featuredDiv.innerHTML = `
+                        <img src="${post.imageUrl || '/assets/images/blog-placeholder.jpg'}" 
+                             alt="${post.title}" class="featured-post-image">
+                        <div class="featured-post-content">
+                            <div class="featured-post-meta">
+                                <span>${date}</span> • <span>${post.category || 'News'}</span>
+                            </div>
+                            <h2 class="featured-post-title">${post.title}</h2>
+                            <p class="featured-post-excerpt">${post.excerpt || post.content?.substring(0, 200)}...</p>
+                            <a href="/pages/blog/post.html?id=${doc.id}" class="btn btn-primary">Read Full Article</a>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                console.error('Error loading featured post:', error);
+            }
+        }
+
+        // Load blog posts
+        async function loadBlogPosts(reset = true) {
+            if (loading) return;
+            
+            loading = true;
+            
+            try {
+                let query = db.collection('blog').orderBy('createdAt', 'desc').limit(6);
+                
+                if (currentCategory !== 'all') {
+                    query = query.where('category', '==', currentCategory);
+                }
+                
+                if (!reset && lastVisible) {
+                    query = query.startAfter(lastVisible);
+                }
+
+                const snapshot = await query.get();
+                
+                if (reset) {
+                    lastVisible = null;
+                }
+
+                if (snapshot.empty) {
+                    if (reset) {
+                        document.getElementById('blogGrid').innerHTML = 
+                            '<p class="no-results">No blog posts found</p>';
+                    }
+                    document.getElementById('loadMoreBtn').style.display = 'none';
+                    loading = false;
+                    return;
+                }
+
+                lastVisible = snapshot.docs[snapshot.docs.length - 1];
+
+                const blogGrid = document.getElementById('blogGrid');
+                
+                if (reset) {
+                    blogGrid.innerHTML = '';
+                }
+
+                snapshot.forEach(doc => {
+                    const post = doc.data();
+                    const date = post.createdAt ? post.createdAt.toDate().toLocaleDateString() : 'No date';
+                    
+                    const postCard = document.createElement('article');
+                    postCard.className = 'blog-card';
+                    postCard.innerHTML = `
+                        <img src="${post.imageUrl || '/assets/images/blog-placeholder.jpg'}" 
+                             alt="${post.title}">
+                        <div class="blog-content">
+                            <p class="blog-meta">${date} | ${post.category || 'News'}</p>
+                            <h3 class="blog-title">${post.title}</h3>
+                            <p class="blog-excerpt">${post.excerpt || post.content?.substring(0, 150)}...</p>
+                            <a href="/pages/blog/post.html?id=${doc.id}" class="btn btn-outline">Read More</a>
+                        </div>
+                    `;
+                    blogGrid.appendChild(postCard);
+                });
+
+                // Show/hide load more button
+                document.getElementById('loadMoreBtn').style.display = 
+                    snapshot.docs.length === 6 ? 'block' : 'none';
+
+            } catch (error) {
+                console.error('Error loading blog posts:', error);
+            } finally {
+                loading = false;
+            }
+        }
+
+        // Filter posts by category
+        function filterPosts(category) {
+            currentCategory = category;
+            
+            // Update active tab
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Reload posts
+            loadBlogPosts(true);
+        }
+
+        // Load more posts
+        function loadMorePosts() {
+            loadBlogPosts(false);
+        }
+
+        // Search blog
+        async function searchBlog() {
+            const searchTerm = document.getElementById('blogSearch').value.trim();
+            
+            if (searchTerm.length < 2) {
+                loadBlogPosts(true);
+                return;
+            }
+
+            try {
+                // Simple search - in production, use Algolia or similar
+                const snapshot = await db.collection('blog').get();
+                
+                const results = [];
+                snapshot.forEach(doc => {
+                    const post = doc.data();
+                    if (post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        post.content?.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        results.push({ id: doc.id, ...post });
+                    }
+                });
+
+                displaySearchResults(results);
+            } catch (error) {
+                console.error('Error searching blog:', error);
+            }
+        }
+
+        // Display search results
+        function displaySearchResults(results) {
+            const blogGrid = document.getElementById('blogGrid');
+            
+            if (results.length === 0) {
+                blogGrid.innerHTML = '<p class="no-results">No posts found matching your search</p>';
+                document.getElementById('loadMoreBtn').style.display = 'none';
+                return;
+            }
+
+            blogGrid.innerHTML = '';
+            
+            results.forEach(post => {
+                const date = post.createdAt ? post.createdAt.toDate().toLocaleDateString() : 'No date';
+                
+                const postCard = document.createElement('article');
+                postCard.className = 'blog-card';
+                postCard.innerHTML = `
+                    <img src="${post.imageUrl || '/assets/images/blog-placeholder.jpg'}" 
+                         alt="${post.title}">
+                    <div class="blog-content">
+                        <p class="blog-meta">${date} | ${post.category || 'News'}</p>
+                        <h3 class="blog-title">${post.title}</h3>
+                        <p class="blog-excerpt">${post.excerpt || post.content?.substring(0, 150)}...</p>
+                        <a href="/pages/blog/post.html?id=${post.id}" class="btn btn-outline">Read More</a>
+                    </div>
+                `;
+                blogGrid.appendChild(postCard);
+            });
+
+            document.getElementById('loadMoreBtn').style.display = 'none';
+        }
+
+        // Newsletter form
+        document.getElementById('blogNewsletterForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = e.target.querySelector('input[type="email"]').value;
+            
+            try {
+                await db.collection('newsletter').add({
+                    email: email,
+                    source: 'blog',
+                    subscribedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                showNotification('Successfully subscribed!', 'success');
+                e.target.reset();
+            } catch (error) {
+                console.error('Newsletter error:', error);
+                showNotification('Error subscribing', 'error');
+            }
+        });
+
+        // Make functions global
+        window.filterPosts = filterPosts;
+        window.loadMorePosts = loadMorePosts;
+        window.searchBlog = searchBlog;
+    </script>
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - ComicVerse</title>
+    <meta name="description" content="Manage your account, view orders, and update your profile.">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="/" class="logo">COMICVERSE</a>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/pages/shop.html">Shop</a></li>
+                    <li><a href="/pages/blog/index.html">Blog</a></li>
+                    <li><a href="/pages/cart.html">Cart</a></li>
+                    <li><a href="/pages/dashboard.html" class="active">Dashboard</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="dashboard-page">
+            <div class="container">
+                <h1 class="page-title">MY DASHBOARD</h1>
+                
+                <!-- Dashboard Tabs -->
+                <div class="dashboard-tabs">
+                    <button class="tab-btn active" onclick="showTab('profile')">Profile</button>
+                    <button class="tab-btn" onclick="showTab('orders')">Orders</button>
+                    <button class="tab-btn" onclick="showTab('settings')">Settings</button>
+                </div>
+
+                <!-- Profile Tab -->
+                <div id="profileTab" class="dashboard-tab active">
+                    <div class="profile-header">
+                        <div class="profile-avatar" id="profileAvatar">
+                            <span id="avatarInitials"></span>
+                        </div>
+                        <div class="profile-info">
+                            <h2 id="profileName"></h2>
+                            <p id="profileEmail"></p>
+                            <p class="member-since" id="memberSince"></p>
+                        </div>
+                    </div>
+
+                    <div class="profile-form">
+                        <h3>Edit Profile</h3>
+                        <form id="profileForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName">First Name</label>
+                                    <input type="text" id="firstName" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" id="lastName" class="form-input">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="displayName">Display Name</label>
+                                <input type="text" id="displayName" class="form-input">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" class="form-input">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <input type="text" id="address" class="form-input">
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input type="text" id="city" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="state">State</label>
+                                    <input type="text" id="state" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="zipCode">ZIP Code</label>
+                                    <input type="text" id="zipCode" class="form-input">
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Update Profile</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Orders Tab -->
+                <div id="ordersTab" class="dashboard-tab">
+                    <h3>Order History</h3>
+                    <div id="ordersList" class="orders-list">
+                        <!-- Orders will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div id="settingsTab" class="dashboard-tab">
+                    <h3>Account Settings</h3>
+                    
+                    <div class="settings-section">
+                        <h4>Change Password</h4>
+                        <form id="passwordForm">
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password</label>
+                                <input type="password" id="currentPassword" class="form-input">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" id="newPassword" class="form-input">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm New Password</label>
+                                <input type="password" id="confirmPassword" class="form-input">
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">Update Password</button>
+                        </form>
+                    </div>
+
+                    <div class="settings-section">
+                        <h4>Email Preferences</h4>
+                        <form id="preferencesForm">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="newsletterPref">
+                                Receive newsletter
+                            </label>
+                            
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="orderUpdatesPref">
+                                Receive order updates
+                            </label>
+                            
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="promotionsPref">
+                                Receive promotions and offers
+                            </label>
+                            
+                            <button type="submit" class="btn btn-primary">Save Preferences</button>
+                        </form>
+                    </div>
+
+                    <div class="settings-section">
+                        <h4>Account Actions</h4>
+                        <button class="btn btn-secondary" onclick="verifyEmail()" id="verifyEmailBtn">
+                            Verify Email
+                        </button>
+                        <button class="btn btn-outline" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 ComicVerse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/firebase-config.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/cart.js"></script>
+    <script>
+        let currentUserData = null;
+
+        // Check authentication
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = '/pages/login.html';
+                return;
+            }
+
+            // Load user data
+            await loadUserData(user);
+            
+            // Load orders
+            await loadOrders(user.uid);
+            
+            // Check admin status
+            const admin = await isAdmin(user.uid);
+            if (admin) {
+                showAdminLink();
+            }
+        });
+
+        async function loadUserData(user) {
+            const result = await getUserData(user.uid);
+            if (result.success) {
+                currentUserData = result.data;
+                displayUserData(result.data);
+            }
+        }
+
+        function displayUserData(data) {
+            // Set avatar initials
+            const initials = data.displayName 
+                ? data.displayName.split(' ').map(n => n[0]).join('').toUpperCase()
+                : data.email[0].toUpperCase();
+            document.getElementById('avatarInitials').textContent = initials;
+
+            // Set profile info
+            document.getElementById('profileName').textContent = data.displayName || 'No name set';
+            document.getElementById('profileEmail').textContent = data.email;
+
+            if (data.createdAt) {
+                const date = data.createdAt.toDate().toLocaleDateString();
+                document.getElementById('memberSince').textContent = `Member since: ${date}`;
+            }
+
+            // Fill form
+            document.getElementById('firstName').value = data.firstName || '';
+            document.getElementById('lastName').value = data.lastName || '';
+            document.getElementById('displayName').value = data.displayName || '';
+            document.getElementById('phone').value = data.phone || '';
+            document.getElementById('address').value = data.address || '';
+            document.getElementById('city').value = data.city || '';
+            document.getElementById('state').value = data.state || '';
+            document.getElementById('zipCode').value = data.zipCode || '';
+
+            // Set preferences
+            if (data.preferences) {
+                document.getElementById('newsletterPref').checked = data.preferences.newsletter || false;
+                document.getElementById('orderUpdatesPref').checked = data.preferences.orderUpdates || false;
+                document.getElementById('promotionsPref').checked = data.preferences.promotions || false;
+            }
+
+            // Show/hide verify email button
+            const verifyBtn = document.getElementById('verifyEmailBtn');
+            if (verifyBtn) {
+                verifyBtn.style.display = data.emailVerified ? 'none' : 'inline-block';
+            }
+        }
+
+        async function loadOrders(userId) {
+            try {
+                const snapshot = await db.collection('orders')
+                    .where('userId', '==', userId)
+                    .orderBy('createdAt', 'desc')
+                    .get();
+
+                const ordersList = document.getElementById('ordersList');
+                
+                if (snapshot.empty) {
+                    ordersList.innerHTML = '<p class="no-orders">No orders yet. Start shopping!</p>';
+                    return;
+                }
+
+                ordersList.innerHTML = '';
+                
+                snapshot.forEach(doc => {
+                    const order = doc.data();
+                    const date = order.createdAt ? order.createdAt.toDate().toLocaleDateString() : 'N/A';
+                    
+                    const orderCard = document.createElement('div');
+                    orderCard.className = 'order-card';
+                    orderCard.innerHTML = `
+                        <div class="order-header">
+                            <span class="order-id">Order #${doc.id.slice(0, 8)}</span>
+                            <span class="order-date">${date}</span>
+                            <span class="order-status status-${order.status}">${order.status}</span>
+                        </div>
+                        <div class="order-items">
+                            ${order.items.map(item => `
+                                <div class="order-item">
+                                    <span>${item.title} x${item.quantity}</span>
+                                    <span>$${(item.price * item.quantity).toFixed(2)}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="order-total">
+                            <strong>Total: $${order.total.toFixed(2)}</strong>
+                        </div>
+                    `;
+                    
+                    ordersList.appendChild(orderCard);
+                });
+
+            } catch (error) {
+                console.error('Error loading orders:', error);
+            }
+        }
+
+        // Profile form submission
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const userData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                displayName: document.getElementById('displayName').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                city: document.getElementById('city').value,
+                state: document.getElementById('state').value,
+                zipCode: document.getElementById('zipCode').value
+            };
+
+            const result = await updateProfile(userData);
+            
+            if (result.success) {
+                showNotification('Profile updated successfully!', 'success');
+            } else {
+                showNotification(result.error, 'error');
+            }
+        });
+
+        // Password form submission
+        document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (newPassword !== confirmPassword) {
+                showNotification('New passwords do not match', 'error');
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                showNotification('Password must be at least 6 characters', 'error');
+                return;
+            }
+
+            const result = await updatePassword(currentPassword, newPassword);
+            
+            if (result.success) {
+                showNotification('Password updated successfully!', 'success');
+                document.getElementById('passwordForm').reset();
+            } else {
+                showNotification(result.error, 'error');
+            }
+        });
+
+        // Preferences form submission
+        document.getElementById('preferencesForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const preferences = {
+                newsletter: document.getElementById('newsletterPref').checked,
+                orderUpdates: document.getElementById('orderUpdatesPref').checked,
+                promotions: document.getElementById('promotionsPref').checked
+            };
+
+            const result = await updateProfile({ preferences });
+            
+            if (result.success) {
+                showNotification('Preferences saved!', 'success');
+            } else {
+                showNotification(result.error, 'error');
+            }
+        });
+
+        // Tab switching
+        function showTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update tab content
+            document.querySelectorAll('.dashboard-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(`${tabName}Tab`).classList.add('active');
+        }
+
+        // Email verification
+        async function verifyEmail() {
+            const result = await resendVerificationEmail();
+            if (result.success) {
+                showNotification('Verification email sent!', 'success');
+            } else {
+                showNotification(result.error, 'error');
+            }
+        }
+
+        // Show admin link for admin users
+        function showAdminLink() {
+            const navMenu = document.querySelector('.nav-menu');
+            if (navMenu) {
+                const adminLink = document.createElement('li');
+                adminLink.innerHTML = '<a href="/pages/admin/dashboard.html">Admin</a>';
+                navMenu.appendChild(adminLink);
+            }
+        }
+
+        window.showTab = showTab;
+    </script>
+</body>
+</html>

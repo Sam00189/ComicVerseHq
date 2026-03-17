@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop All Comics - ComicVerse</title>
+    <meta name="description" content="Browse our extensive collection of comics from Marvel, DC, Manga, and Indie publishers. Find your next favorite comic at ComicVerse.">
+    <meta name="keywords" content="comic shop, buy comics online, marvel comics, dc comics, manga, graphic novels">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Shop All Comics - ComicVerse">
+    <meta property="og:description" content="Browse thousands of comics from all major publishers.">
+    <meta property="og:image" content="https://comicverse.web.app/assets/images/og-shop.jpg">
+    <meta property="og:url" content="https://comicverse.web.app/pages/shop.html">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="/" class="logo">COMICVERSE</a>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/pages/shop.html" class="active">Shop</a></li>
+                    <li><a href="/categories/marvel.html">Marvel</a></li>
+                    <li><a href="/categories/dc.html">DC</a></li>
+                    <li><a href="/categories/manga.html">Manga</a></li>
+                    <li><a href="/categories/indie.html">Indie</a></li>
+                    <li><a href="/pages/blog/index.html">Blog</a></li>
+                    <li><a href="/pages/cart.html" class="cart-icon">
+                        Cart <span class="cart-count" id="cartCount">0</span>
+                    </a></li>
+                    <li class="auth-links" id="authLinks">
+                        <a href="/pages/login.html" class="btn-login">Login</a>
+                        <a href="/pages/signup.html" class="btn-signup">Sign Up</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Shop Header -->
+        <section class="shop-header">
+            <div class="container">
+                <h1 class="page-title">ALL COMICS</h1>
+                <p class="page-subtitle">Discover thousands of comics from your favorite publishers</p>
+                
+                <!-- Search and Filter Bar -->
+                <div class="shop-toolbar">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Search comics by title or author...">
+                        <button id="searchBtn" class="btn btn-primary">Search</button>
+                    </div>
+                    
+                    <div class="filter-options">
+                        <select id="categoryFilter">
+                            <option value="all">All Categories</option>
+                            <option value="Marvel">Marvel</option>
+                            <option value="DC">DC</option>
+                            <option value="Manga">Manga</option>
+                            <option value="Indie">Indie</option>
+                        </select>
+                        
+                        <select id="sortBy">
+                            <option value="title">Sort by: Title</option>
+                            <option value="price-asc">Price: Low to High</option>
+                            <option value="price-desc">Price: High to Low</option>
+                            <option value="newest">Newest First</option>
+                        </select>
+                        
+                        <select id="itemsPerPage">
+                            <option value="12">12 per page</option>
+                            <option value="24">24 per page</option>
+                            <option value="48">48 per page</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comics Grid -->
+        <section class="shop-section">
+            <div class="container">
+                <div id="comicsGrid" class="comics-grid">
+                    <!-- Comics will be loaded here -->
+                    <div class="loading-spinner"></div>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="pagination" id="pagination"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>About ComicVerse</h3>
+                    <p>Your premier destination for comic books from all publishers.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/pages/shop.html">Shop</a></li>
+                        <li><a href="/pages/blog/index.html">Blog</a></li>
+                        <li><a href="/pages/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="/categories/marvel.html">Marvel</a></li>
+                        <li><a href="/categories/dc.html">DC</a></li>
+                        <li><a href="/categories/manga.html">Manga</a></li>
+                        <li><a href="/categories/indie.html">Indie</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ComicVerse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+ 
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+<script src="js/firebase-config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

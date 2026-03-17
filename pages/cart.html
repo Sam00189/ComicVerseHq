@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - ComicVerse</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<header>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">COMICVERSE</a>
+
+            <ul class="nav-menu">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="./shop.html">Shop</a></li>
+                <li><a href="../categories/marvel.html">Marvel</a></li>
+                <li><a href="../categories/dc.html">DC</a></li>
+                <li><a href="../categories/manga.html">Manga</a></li>
+                <li><a href="../categories/indie.html">Indie</a></li>
+                <li><a href="./blog/index.html">Blog</a></li>
+                <li><a href="./cart.html" class="active">Cart</a></li>
+                <li id="authLinks"></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="container">
+        <h1>YOUR CART</h1>
+
+        <div id="cartItems"></div>
+
+        <h2>Total: <span id="cartTotal">$0.00</span></h2>
+
+        <button onclick="proceedToCheckout()">Proceed to Checkout</button>
+        <button onclick="continueShopping()">Continue Shopping</button>
+    </div>
+</main>
+
+<footer>
+    <p>© 2024 ComicVerse</p>
+</footer>
+
+<!-- ✅ Firebase SDKs (CORRECT) -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<!-- ✅ Your scripts (CORRECT PATHS) -->
+<script src="../js/firebase-config.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/cart.js"></script>
+<script src="../js/main.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    if (window.cart) {
+        cart.updateCartDisplay();
+    }
+});
+
+function proceedToCheckout() {
+    if (!window.cart || cart.items.length === 0) {
+        alert("Your cart is empty");
+        return;
+    }
+
+    const user = auth.currentUser;
+
+    if (!user) {
+        localStorage.setItem("redirectAfterLogin", "/pages/checkout.html");
+        window.location.href = "/pages/login.html";
+    } else {
+        window.location.href = "/pages/checkout.html";
+    }
+}
+
+function continueShopping() {
+    window.location.href = "./shop.html";
+}
+</script>
+
+</body>
+</html>

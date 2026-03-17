@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comic Details - ComicVerse</title>
+    <meta name="description" content="View detailed information about this comic including author, price, description, and more.">
+    
+    <!-- Open Graph Tags - Will be dynamically updated -->
+    <meta property="og:title" content="Comic Details - ComicVerse">
+    <meta property="og:description" content="View comic details and add to cart">
+    <meta property="og:image" content="/assets/images/og-image.jpg">
+    <meta property="og:url" content="https://comicverse.web.app/pages/product.html">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="/" class="logo">COMICVERSE</a>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/pages/shop.html">Shop</a></li>
+                    <li><a href="/categories/marvel.html">Marvel</a></li>
+                    <li><a href="/categories/dc.html">DC</a></li>
+                    <li><a href="/categories/manga.html">Manga</a></li>
+                    <li><a href="/categories/indie.html">Indie</a></li>
+                    <li><a href="/pages/blog/index.html">Blog</a></li>
+                    <li><a href="/pages/cart.html" class="cart-icon">
+                        Cart <span class="cart-count" id="cartCount">0</span>
+                    </a></li>
+                    <li class="auth-links" id="authLinks"></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <div class="container">
+                <a href="/">Home</a> &gt;
+                <a href="/pages/shop.html">Shop</a> &gt;
+                <span id="breadcrumbCategory"></span> &gt;
+                <span id="breadcrumbTitle"></span>
+            </div>
+        </div>
+
+        <!-- Product Details -->
+        <section class="product-details">
+            <div class="container">
+                <div class="loading-spinner" id="loadingSpinner"></div>
+                
+                <div class="product-container" id="productContainer" style="display: none;">
+                    <!-- Left Column - Images -->
+                    <div class="product-gallery">
+                        <div class="main-image">
+                            <img id="comicImage" src="" alt="Comic cover">
+                        </div>
+                        <div class="thumbnail-images" id="thumbnailImages">
+                            <!-- Thumbnails will be added here -->
+                        </div>
+                    </div>
+
+                    <!-- Right Column - Info -->
+                    <div class="product-info">
+                        <h1 class="product-title" id="comicTitle"></h1>
+                        
+                        <div class="product-meta">
+                            <p class="product-author" id="comicAuthor"></p>
+                            <p class="product-publisher" id="comicPublisher"></p>
+                        </div>
+
+                        <div class="product-rating" id="comicRating">
+                            <!-- Rating stars will be added here -->
+                        </div>
+
+                        <div class="product-price" id="comicPrice"></div>
+
+                        <div class="product-availability" id="comicStock"></div>
+
+                        <div class="product-description">
+                            <h3>Description</h3>
+                            <p id="comicDescription"></p>
+                        </div>
+
+                        <div class="product-details-list" id="comicDetails">
+                            <!-- Additional details will be added here -->
+                        </div>
+
+                        <div class="product-actions">
+                            <div class="quantity-selector">
+                                <label for="quantity">Quantity:</label>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn" onclick="decreaseQuantity()">-</button>
+                                    <input type="number" id="quantity" value="1" min="1" max="99" readonly>
+                                    <button class="quantity-btn" onclick="increaseQuantity()">+</button>
+                                </div>
+                            </div>
+
+                            <div class="action-buttons">
+                                <button class="btn btn-primary btn-large" onclick="addToCart()" id="addToCartBtn">
+                                    Add to Cart
+                                </button>
+                                <button class="btn btn-secondary btn-large" onclick="buyNow()" id="buyNowBtn">
+                                    Buy Now
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="product-share">
+                            <h4>Share this comic:</h4>
+                            <div class="share-buttons">
+                                <a href="#" class="share-btn facebook" onclick="shareOnFacebook()">📘</a>
+                                <a href="#" class="share-btn twitter" onclick="shareOnTwitter()">🐦</a>
+                                <a href="#" class="share-btn pinterest" onclick="shareOnPinterest()">📌</a>
+                                <a href="#" class="share-btn email" onclick="shareByEmail()">📧</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Comics -->
+        <section class="related-comics">
+            <div class="container">
+                <h2 class="section-title">You Might Also Like</h2>
+                <div class="comics-grid" id="relatedComics">
+                    <!-- Related comics will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews Section -->
+        <section class="reviews-section">
+            <div class="container">
+                <h2 class="section-title">Customer Reviews</h2>
+                
+                <div class="reviews-summary" id="reviewsSummary">
+                    <!-- Review summary will be added here -->
+                </div>
+
+                <div class="reviews-list" id="reviewsList">
+                    <!-- Reviews will be loaded here -->
+                </div>
+
+                <!-- Add Review Form (for logged in users) -->
+                <div class="add-review" id="addReviewSection" style="display: none;">
+                    <h3>Write a Review</h3>
+                    <form id="reviewForm" class="review-form">
+                        <div class="rating-select">
+                            <label>Your Rating:</label>
+                            <div class="stars">
+                                <input type="radio" name="rating" value="5" id="star5">
+                                <label for="star5">★</label>
+                                <input type="radio" name="rating" value="4" id="star4">
+                                <label for="star4">★</label>
+                                <input type="radio" name="rating" value="3" id="star3">
+                                <label for="star3">★</label>
+                                <input type="radio" name="rating" value="2" id="star2">
+                                <label for="star2">★</label>
+                                <input type="radio" name="rating" value="1" id="star1">
+                                <label for="star1">★</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="reviewTitle">Review Title:</label>
+                            <input type="text" id="reviewTitle" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="reviewContent">Your Review:</label>
+                            <textarea id="reviewContent" class="form-textarea" rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <!-- Same footer as index.html -->
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>About ComicVerse</h3>
+                    <p>Your premier destination for comic books from all publishers. We're passionate about bringing the best comics to fans worldwide.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/pages/shop.html">Shop All Comics</a></li>
+                        <li><a href="/pages/blog/index.html">Comic Blog</a></li>
+                        <li><a href="/pages/dashboard.html">My Account</a></li>
+                        <li><a href="/pages/cart.html">Shopping Cart</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="/categories/marvel.html">Marvel Comics</a></li>
+                        <li><a href="/categories/dc.html">DC Comics</a></li>
+                        <li><a href="/categories/manga.html">Manga</a></li>
+                        <li><a href="/categories/indie.html">Indie Comics</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="/pages/faq.html">FAQ</a></li>
+                        <li><a href="/pages/contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 ComicVerse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+ 
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+<script src="js/firebase-config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
